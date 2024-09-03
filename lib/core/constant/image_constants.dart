@@ -1,0 +1,14 @@
+import 'dart:core';
+
+class ImageConstants {
+  ImageConstants._();
+  static const String imageSplashBackground = 'assets/images/img_splash.jpg';
+  static const String imageSplashBackgroundIpad = 'assets/images/img_splash_ipad.jpg';
+  static const String icSplashLogo = 'assets/icons/ic_splash_logo.png';
+  static const String icEnLang = 'assets/icons/ic_en_lang.png';
+  static const String icNoLang = 'assets/icons/ic_no_lang.png';
+  static const String icSwLang = 'assets/icons/ic_sw_lang.png';
+  static const String icPtLang = 'assets/icons/ic_pt_lang.png';
+  static const String imgNoDataFound = 'assets/images/img_no_data_found.png';
+  static const String icRetry = 'assets/icons/ic_retry.png';
+}
