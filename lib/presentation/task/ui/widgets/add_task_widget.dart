@@ -80,13 +80,35 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
             key: _formKey,
             child: SingleChildScrollView(
                 child: Padding(
-              padding: EdgeInsets.symmetric(
+               padding: EdgeInsets.symmetric(
                   horizontal: AppWidth.s30),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment : CrossAxisAlignment.start,
                 // This will force the Column to take up all available vertical space
                 children: [
+                  Gap(AppHeight.s25),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Material(
+                      shape: CircleBorder(),
+                      color: Colors.grey.shade300,
+                      child: InkWell(
+                        splashColor: Colors.blue.shade100,
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: (){
+                          widget.modalController.closeModal(context);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.clear),
+                        ),
+                      ),
+                    ),
+                  ),
                   Gap(AppHeight.s25),
                   TextInputField(
                     textFieldKey: _titlekey,
