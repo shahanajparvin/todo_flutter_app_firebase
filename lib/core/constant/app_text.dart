@@ -8,7 +8,7 @@ class AppText {
 
   static const cancel = "Cancel";
   static const create = "Create";
-
+  static const update = "Update";
   static const title = "Title Task";
 
   static const description = "Description";

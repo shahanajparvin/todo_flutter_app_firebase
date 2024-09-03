@@ -11,10 +11,13 @@ import 'package:todo_app/presentation/task/ui/widgets/delete_confirmation_widget
 class SlidableListItem extends StatefulWidget  {
   final Widget child;
   final VoidCallback onDelete;
+  final VoidCallback onUpdate;
 
   SlidableListItem({
     Key? key,
-    required this.child, required this.onDelete,
+    required this.child,
+    required this.onDelete,
+    required this.onUpdate,
   }) : super(key: key);
 
   @override
@@ -71,14 +74,11 @@ class _SlidableListItemState extends State<SlidableListItem> with TickerProvider
               shape: const CircleBorder(), // Ensure circular shape (though it's default)
               child: Icon(Icons.edit,color:Colors.green,size: AppHeight.s24,),
               onPressed: () {
-                final ModalController modalController = ModalController();
-                modalController.showModal(context, TaskDeleteConfirmView(modalController: modalController, onDelete: (){
-                  widget.onDelete();
-                  slidableController.close(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                }));
+                widget.onUpdate();
+                slidableController.close(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
               },
             ),
           )  ,

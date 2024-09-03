@@ -55,6 +55,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     super.initState();
 
     if(widget.task!=null){
+      print('- widget.task!.category '+ widget.task!.category.toString());
       _titleController.text = widget.task!.title;
       _descriptionController.text = widget.task!.description;
       _dateController.text = widget.task!.date;
@@ -127,6 +128,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   ),
                   Gap(AppHeight.s20),
                   CategorySectionWidget(
+                     selectedValue: _selectedValue,
                     onValueChanged: (value){
                       _selectedValue = value!;
                     },
@@ -140,6 +142,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   Gap(AppHeight.s20),
 
                   AddTaskButtonSection(
+                    buttonLabel: widget.task!=null?AppText.update:AppText.create,
                     onCancelCallback: (){
                       widget.modalController.closeModal(context);
                     },
@@ -149,7 +152,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
 
                         if(widget.task!=null){
-                          print('============task '+ widget.task!.date.toString());
+                          print('============_selectedValue '+_selectedValue.toString());
                           final task = Task(
                               id: widget.task!.id,
                               title: _titleController.text,

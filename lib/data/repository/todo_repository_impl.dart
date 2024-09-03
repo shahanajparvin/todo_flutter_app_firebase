@@ -69,13 +69,13 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<Task>> updateTask(Map<String, dynamic> map) async {
-    if (await connectionChecker.isConnected()) {
+    if (!(map['id'].contains('local'))&&await connectionChecker.isConnected()) {
       print('-----asdasdas');
       final response = await remoteDataSource.updateTask(
           map['id'], map['task']);
       print('-----------response ' + response.toString());
       return response;
-    } else {
+    } else if(( map['id'].contains('local'))){
       final data = await localDataSource.updateTask(map['task']);
       if (data == null) {
         return const ErrorResponse(
@@ -83,6 +83,8 @@ class TodoRepositoryImpl extends TodoRepository {
       }
       return SuccessResponse(data: data);
     }
+    return const ErrorResponse(
+        errorMessage: "Task can not update");
  /*   final data = await localDataSource.updateTask(map['task']);
     if (data == null) {
       return const ErrorResponse(

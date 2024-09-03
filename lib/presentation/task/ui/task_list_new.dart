@@ -8,7 +8,7 @@ import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 import 'package:todo_app/presentation/task/bloc/task_event.dart';
 import 'package:todo_app/presentation/task/bloc/task_state.dart';
 import 'package:todo_app/presentation/task/ui/widgets/add_task_widget.dart';
-import 'package:todo_app/presentation/task/ui/widgets/slider_action_widget.dart';
+import 'package:todo_app/presentation/task/ui/widgets/slider_edit_delete_action_widget.dart';
 
 class TaskPageNew extends StatefulWidget {
   const TaskPageNew({super.key});
@@ -119,6 +119,12 @@ class _TaskListState extends State<TaskList> {
                               onDelete:(){
                                 widget.taskBloc.add(DeleteTask(task.id!));
                               },
+                              onUpdate: () {
+                                modalController.showModal(
+                                  context,
+                                  AddTaskWidget(modalController: modalController, taskBloc: widget.taskBloc,task: task,),
+                                );
+                              },
                               child:Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -185,10 +191,7 @@ class _TaskListState extends State<TaskList> {
                                             icon: Icon(Icons.edit),
                                             onPressed: () {
 
-                                              modalController.showModal(
-                                                context,
-                                                AddTaskWidget(modalController: modalController, taskBloc: widget.taskBloc,task: task,),
-                                              );
+
                                             },
                                           ),
                                           IconButton(

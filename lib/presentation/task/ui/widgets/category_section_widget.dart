@@ -7,9 +7,10 @@ import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 
 class CategorySectionWidget extends StatefulWidget {
+  final String? selectedValue;
   final ValueChanged<String?> onValueChanged;
 
-  CategorySectionWidget({required this.onValueChanged});
+  CategorySectionWidget({required this.onValueChanged, this.selectedValue});
 
   @override
   _CategorySectionWidget createState() => _CategorySectionWidget();
@@ -28,7 +29,9 @@ class _CategorySectionWidget extends State<CategorySectionWidget> {
   void initState() {
     super.initState();
     // Set default value if none is selected
-    if (_selectedValue == null && categories.isNotEmpty) {
+    if(widget.selectedValue!=null){
+      _selectedValue = widget.selectedValue;
+    }else {
       _selectedValue = categories.keys.first;
       widget.onValueChanged(_selectedValue); // Call the callback with default value
     }

@@ -11,8 +11,9 @@ class AddTaskButtonSection extends StatelessWidget {
 
   final VoidCallback onCancelCallback;
   final VoidCallback onCreateCallBack;
+  final String buttonLabel;
 
-  const AddTaskButtonSection({super.key, required this.onCancelCallback, required this.onCreateCallBack});
+  const AddTaskButtonSection({super.key, required this.onCancelCallback, required this.onCreateCallBack, required this.buttonLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class AddTaskButtonSection extends StatelessWidget {
                   onPressed: onCreateCallBack,
                   backGroundColor: AppColor.buttonColor,
                   height: AppHeight.s40,
-                  label: AppText.create,
+                  label: buttonLabel,
                   labelColor: AppColor.windowBackgroundColor
               )),
         )
