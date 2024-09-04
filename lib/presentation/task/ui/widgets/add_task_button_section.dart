@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:todo_app/core/constant/app_color.dart';
 import 'package:todo_app/core/constant/app_size.dart';
 import 'package:todo_app/core/constant/app_text.dart';
+import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/presentation/task/ui/widgets/app_button.dart';
 
 class AddTaskButtonSection extends StatelessWidget {
@@ -17,7 +18,7 @@ class AddTaskButtonSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return   Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -30,7 +31,7 @@ class AddTaskButtonSection extends StatelessWidget {
                 onPressed: onCancelCallback,
                 backGroundColor: Colors.white,
                 height: AppHeight.s40,
-                label: AppText.cancel,
+                label: context.text.cancel,
                 labelColor: AppColor.buttonColor.withOpacity(.7),
               )),
         ),

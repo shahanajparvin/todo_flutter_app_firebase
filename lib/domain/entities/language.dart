@@ -6,7 +6,7 @@ import 'package:todo_app/core/utils/core_utils.dart';
 
 
 enum Language {
-  norway("no", "Norwegian"), english("en", "English"), portuguese("pt", "Portuguese");
+  english("en", "English"), arabic("ar", "Arabic");
 
   final String languageCode;
   final String languageName;
@@ -15,30 +15,27 @@ enum Language {
 
   static Language getLanguageByName(String languageName) {
     switch (languageName) {
-      case "Norway": return Language.norway;
-      case "Portuguese" : return Language.portuguese;
+      case "Arabic": return Language.arabic;
       default: return Language.english;
     }
   }
 
   static Language getLanguageByCode(String code) {
     switch (code) {
-      case "no": return Language.norway;
-      case "pt" : return Language.portuguese;
+      case "ar": return Language.arabic;
       default: return Language.english;
     }
   }
 
   static String getLocalizedLanguageName(BuildContext context, String code) {
     switch (code) {
-      case "no": return context.text.norwegian;
-      case "pt" : return context.text.portuguese;
+      case "ar": return context.text.arabic;
       default: return context.text.english;
     }
   }
 
   List<String> getLanguageNames() {
-    return [Language.norway.languageName, Language.portuguese.languageName, Language.english.languageName];
+    return [Language.arabic.languageName, Language.english.languageName];
   }
 
   get locale {
@@ -47,8 +44,7 @@ enum Language {
 
   String _getCountryCodeForLocale() {
     switch (languageCode) {
-      case 'no': return 'NO';
-      case 'pt': return 'PT';
+      case 'ar': return 'AR';
       default : return 'US';
     }
   }

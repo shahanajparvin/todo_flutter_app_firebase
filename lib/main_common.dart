@@ -21,6 +21,7 @@ import 'package:todo_app/core/utils/internet_connection_checker.dart';
 import 'package:todo_app/core/utils/sharedpreferences_helper.dart';
 import 'package:todo_app/data/datasources/local/local_data_source.dart';
 import 'package:todo_app/data/datasources/remote/remote_data_source.dart';
+import 'package:todo_app/domain/entities/language.dart';
 import 'package:todo_app/presentation/lanuage/bloc/language_bloc.dart';
 import 'package:todo_app/presentation/lanuage/bloc/language_state.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,14 +50,15 @@ void mainCommon(FlavorConfig config) async {
   Workmanager().initialize(
     callbackDispatcher, // The top-level function that is called by the workmanager
   );
+ /* _syncData(localDataSource: injector(),remoteDataSource: injector(),connectionChecker: injector());*/
   runApp(const MyApp());
 }
 
 
 
-/*void updateLocalization(Language language) async {
-   localizations = await AppLocalizations.delegate.load(language.locale);
-}*/
+void updateLocalization(Language language) async {
+  localizations = await AppLocalizations.delegate.load(language.locale);
+}
 
 
 
@@ -135,8 +137,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
-     /* updateLocalization(appSettings.getSelectedLanguage());*/
+      AppSettings appSettings = injector();
+      updateLocalization(appSettings.getSelectedLanguage());
     });
   }
 
@@ -164,15 +166,16 @@ class _MyAppState extends State<MyApp> {
 
 
 
-  Widget _buildAppWithLanguage() {
-    return BlocProvider(
-      create: (context) =>
-          LanguageBloc(injector<AppSettings>().getSelectedLanguage()),
-      child: BlocBuilder<LanguageBloc, LanguageState>(
-        builder: (context, state) => _buildScreenUtilInit(state),
-      ),
-    );
-  }
+    Widget _buildAppWithLanguage() {
+
+      return BlocProvider(
+        create: (context) =>
+            LanguageBloc(injector<AppSettings>().getSelectedLanguage()),
+        child: BlocBuilder<LanguageBloc, LanguageState>(
+          builder: (context, state) => _buildScreenUtilInit(state),
+        ),
+      );
+    }
 
   Widget _buildScreenUtilInit(LanguageState state) {
     return screenutil.ScreenUtilInit(

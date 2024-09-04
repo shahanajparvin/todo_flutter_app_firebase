@@ -42,7 +42,7 @@ class TaskDeleteConfirmView extends StatelessWidget {
 
           Gap(AppHeight.s25),
 
-          Text(AppText.deleteTask,
+          Text(context.text.delete_task,
               textAlign: TextAlign.center,
               style: context.textTheme.displaySmall!.copyWith(
                   fontSize: AppTextSize.s18,
@@ -66,7 +66,7 @@ class TaskDeleteConfirmView extends StatelessWidget {
                         modalController.closeModal(context);
                       },
                       backGroundColor: AppColor.windowBackgroundColor,
-                      height: AppHeight.s48, label: AppText.no,labelColor: AppColor.errorColor,)),
+                      height: AppHeight.s48, label: context.text.no,labelColor: AppColor.errorColor,)),
               ),
               Gap(AppWidth.s20),
               Expanded(
@@ -78,7 +78,7 @@ class TaskDeleteConfirmView extends StatelessWidget {
                         onDelete();
                         },
                       backGroundColor: AppColor.errorColor,
-                      height: AppHeight.s48, label: AppText.delete,labelColor: AppColor.windowBackgroundColor,)),
+                      height: AppHeight.s48, label: context.text.delete,labelColor: AppColor.windowBackgroundColor,)),
               )
 
             ],

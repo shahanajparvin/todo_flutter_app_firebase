@@ -12,6 +12,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   }
 
   onChangeLanguage(ChangeLanguage event, Emitter<LanguageState> emit) {
+    print('----------cxvxvxc '+ event.selectedLanguage.toString());
     emit(state.copyWith(selectedLanguage: event.selectedLanguage));
   }
 }

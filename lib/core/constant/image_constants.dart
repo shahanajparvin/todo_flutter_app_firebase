@@ -7,7 +7,7 @@ class ImageConstants {
   static const String icSplashLogo = 'assets/icons/ic_splash_logo.png';
   static const String icEnLang = 'assets/icons/ic_en_lang.png';
   static const String icNoLang = 'assets/icons/ic_no_lang.png';
-  static const String icSwLang = 'assets/icons/ic_sw_lang.png';
+  static const String icArabic = 'assets/icons/ic_ar_lang.png';
   static const String icPtLang = 'assets/icons/ic_pt_lang.png';
   static const String imgNoDataFound = 'assets/images/img_no_data_found.png';
   static const String icRetry = 'assets/icons/ic_retry.png';

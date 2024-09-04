@@ -1,15 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/presentation/home/home_page.dart';
 import 'package:todo_app/presentation/splash/splash_page.dart';
-import 'package:todo_app/presentation/task/ui/task_list.dart';
-import 'package:todo_app/presentation/task/ui/task_list_new.dart';
+
 
 
 enum AppRoutes {
   splash,
-  home
+  home,
 }
 
 GoRouter provideGoRoute() {
@@ -32,8 +30,10 @@ GoRouter provideGoRoute() {
         GoRoute(
           path: "/home",
           name: AppRoutes.home.name,
-          builder: (context, state) =>  TaskPageNew(),
+          builder: (context, state) =>  HomePage(),
         ),
+
+
 
       ]);
 }

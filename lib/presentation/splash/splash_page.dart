@@ -52,6 +52,8 @@ void registerTask() {
     AppKey.connectionChecker: connectionChecker,
   };
 
+  print('----------inputData '+inputData.toString());
+
   Workmanager().registerPeriodicTask(
     "1", // Unique identifier for the task
     AppConst.syncService,

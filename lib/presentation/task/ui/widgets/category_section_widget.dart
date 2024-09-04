@@ -9,8 +9,9 @@ import 'package:todo_app/core/utils/core_utils.dart';
 class CategorySectionWidget extends StatefulWidget {
   final String? selectedValue;
   final ValueChanged<String?> onValueChanged;
+  final BuildContext buildContext;
 
-  CategorySectionWidget({required this.onValueChanged, this.selectedValue});
+  CategorySectionWidget({required this.onValueChanged, this.selectedValue, required this.buildContext});
 
   @override
   _CategorySectionWidget createState() => _CategorySectionWidget();
@@ -19,16 +20,16 @@ class CategorySectionWidget extends StatefulWidget {
 class _CategorySectionWidget extends State<CategorySectionWidget> {
   String? _selectedValue;
 
-  Map<String, Color> categories = {
-    'General': Colors.green,
-    'Learning': Colors.blue,
-    'Working': Colors.amber,
-  };
+  late Map<String, Color> categories;
 
   @override
   void initState() {
     super.initState();
-    // Set default value if none is selected
+    categories = {
+      widget.buildContext.text.general: Colors.green,
+      widget.buildContext.text.learning: Colors.blue,
+      widget.buildContext.text.working: Colors.amber,
+    };
     if(widget.selectedValue!=null){
       _selectedValue = widget.selectedValue;
     }else {
@@ -42,7 +43,7 @@ class _CategorySectionWidget extends State<CategorySectionWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppText.category,
+        Text(context.text.category,
             style: context.textTheme.displaySmall!.copyWith(
                 fontSize: AppTextSize.s15, fontWeight: FontWeight.w500)),
         Gap(AppHeight.s5),

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/constant/app_text.dart';
+import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 
 class DateInputWidget extends StatelessWidget {
@@ -16,11 +17,11 @@ class DateInputWidget extends StatelessWidget {
     return  Flexible(
         child: TextInputField(
           icon: Icons.calendar_month,
-          label: AppText.date,
+          label: context.text.date,
           inputController: dateController,
-          hintText: AppText.dateHint,
+          hintText: context.text.date_hint,
           readOnly: true,
-          errorText: AppText.dateError,
+          errorText: context.text.date_error,
           onTap: (){
             _selectDate(context);
           },

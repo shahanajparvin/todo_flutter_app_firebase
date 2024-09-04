@@ -8,6 +8,7 @@ import 'package:todo_app/core/di/injector.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
 import 'package:todo_app/domain/entities/task.dart';
+import 'package:todo_app/presentation/common/widgets/app_close_icon.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 import 'package:todo_app/presentation/task/bloc/task_event.dart';
 import 'package:todo_app/presentation/task/ui/task_list_new.dart';
@@ -48,7 +49,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   final _descriptionKey = GlobalKey<FormFieldState<String>>();
 
-  late String _selectedValue;
+   String? _selectedValue;
 
   @override
   void initState() {
@@ -89,46 +90,27 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                 // This will force the Column to take up all available vertical space
                 children: [
                   Gap(AppHeight.s25),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Material(
-                      shape: CircleBorder(),
-                      color: Colors.grey.shade300,
-                      child: InkWell(
-                        splashColor: Colors.blue.shade100,
-                        borderRadius: BorderRadius.circular(100),
-                        onTap: (){
-                          widget.modalController.closeModal(context);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(Icons.clear),
-                        ),
-                      ),
-                    ),
-                  ),
+                  AppCloseIcon(modalController: widget.modalController),
                   Gap(AppHeight.s25),
                   TextInputField(
                     textFieldKey: _titlekey,
-                    label: AppText.title,
+                    label: context.text.title_task,
                     inputController: _titleController,
-                    hintText: AppText.titleHint,
-                    errorText: AppText.titleError,
+                    hintText: context.text.title_hint,
+                    errorText: context.text.title_error,
                   ),
                   Gap(AppHeight.s20),
                   TextInputField(
                     textFieldKey: _descriptionKey,
-                    label: AppText.description,
+                    label: context.text.description,
                     inputController: _descriptionController,
-                    hintText: AppText.description,
+                    hintText:context.text.description,
                     maxLine: 4,
                   ),
                   Gap(AppHeight.s20),
                   CategorySectionWidget(
-                     selectedValue: _selectedValue,
+                    selectedValue: _selectedValue!=null?_selectedValue:null,
+                    buildContext: context,
                     onValueChanged: (value){
                       _selectedValue = value!;
                     },
@@ -142,17 +124,13 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   Gap(AppHeight.s20),
 
                   AddTaskButtonSection(
-                    buttonLabel: widget.task!=null?AppText.update:AppText.create,
+                    buttonLabel: widget.task!=null?context.text.update:context.text.create,
                     onCancelCallback: (){
                       widget.modalController.closeModal(context);
                     },
                     onCreateCallBack: (){
-
                       if(_formKey.currentState!.validate()){
-
-
                         if(widget.task!=null){
-                          print('============_selectedValue '+_selectedValue.toString());
                           final task = Task(
                               id: widget.task!.id,
                               title: _titleController.text,
@@ -160,7 +138,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                               date: _dateController.text,
                               time: _timeController.text,
                               isCompleted: widget.task!.isCompleted,
-                              category: _selectedValue);
+                              category: _selectedValue!=null?_selectedValue!:'');
                           _updateTask(task);
                         }else{
                           final task = Task(
@@ -169,7 +147,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                               date: _dateController.text,
                               time: _timeController.text,
                               isCompleted: false,
-                              category: _selectedValue);
+                              category: _selectedValue!=null?_selectedValue!:'');
                           _addTask(task);
                         }
                       }
@@ -187,10 +165,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     widget.taskBloc.add(AddTask(newTask));
     widget.modalController.closeModal(context);
   }
-
-
   _updateTask(Task task){
-    print('sdfsdfsd '+ task.id.toString());
     widget.taskBloc.add(
         UpdateTask(
             task.id!, task));

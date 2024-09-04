@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColor {
   AppColor._();
 
-  static const Color themeColor = Color(0xff4A0D3B);
+
   static const Color backgroundWhite = Colors.white;
   static const Color background = Color(0xffF7FCFF);
   static const Color backgroundLightRed = Color(0xffFFDDDF);
@@ -33,12 +33,21 @@ class AppColor {
   static const Color caseDividerColor = Color(0xFF8591AE);
   static const Color textThemeColor =  Color(0xFF424754);
 
+
+
+  static const Color themeColor = Color(0xff6092DF);
+
+  static const Color themeColor2= Color(0xff007dff);
+
+  static const Color themeColor1 = Color(0xff9DCDFF);
+
   static const Color darkBlue = Color(0xff1D2823);
 
   static const Color hintColor = Color(0xffB0B0B0);
 
   static const Color errorColor = Color(0xFFBA1A1A);
 
+  static const Color whiteColor = Color(0xFFFFFFFF);
 
   static const Color buttonColor = Colors.blue;
 

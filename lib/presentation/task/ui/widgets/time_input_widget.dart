@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/constant/app_text.dart';
+import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 
 class TimeInputWidget extends StatelessWidget {
@@ -16,11 +17,11 @@ class TimeInputWidget extends StatelessWidget {
     return  Flexible(
         child: TextInputField(
           icon: Icons.schedule,
-          label: AppText.time,
+          label: context.text.time,
           inputController: timeController,
-          hintText: AppText.timeHint,
+          hintText: context.text.time_hint,
           readOnly: true,
-          errorText: AppText.timeError,
+          errorText: context.text.time_error,
           onTap: (){
             _selectTime(context);
           },
