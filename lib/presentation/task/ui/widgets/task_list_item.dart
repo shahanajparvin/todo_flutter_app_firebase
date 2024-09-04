@@ -58,20 +58,23 @@ class TaskListItem extends StatelessWidget {
                     CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Use spaceBetween to separate the items
                         children: [
-                          Text(
-                            task.title,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                          Flexible(
+                            child: Text(
+                              task.title,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                          Spacer(),
+                          Gap(AppWidth.s10),
                           AppCircularCheckbox(
                             onChanged: (value) {
-                              taskBloc.
-                              add(UpdateIsCompleted(task.id!,value!));
-                            }, isChecked: task.isCompleted,
+                              taskBloc.add(UpdateIsCompleted(task.id!, value!));
+                            },
+                            isChecked: task.isCompleted,
                           ),
                         ],
                       ),
@@ -155,7 +158,7 @@ class AppCircularCheckbox extends StatefulWidget {
 class _AppCircularCheckboxState extends State<AppCircularCheckbox> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         widget.onChanged(!widget.isChecked);
       },

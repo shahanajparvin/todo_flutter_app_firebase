@@ -71,6 +71,14 @@ class DateWidget extends StatelessWidget {
     return FutureBuilder<String>(
       future: DateManager.getCurrentDate(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return Text(
+          snapshot.hasData&&snapshot.data!=null?snapshot.data!:'',
+          style: TextStyle(
+            color: AppColor.caseDividerColor,
+            fontWeight: FontWeight.w500,
+            fontSize: AppTextSize.s13,
+          ),
+        );
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Display a loading indicator while waiting for the result
           return CircularProgressIndicator();
