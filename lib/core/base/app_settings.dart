@@ -15,13 +15,13 @@ class AppSettings {
 
 
   Language getSelectedLanguage() {
-    String code = _prefHelper.getString(keyCurrentLanguage,
+    String code = _prefHelper.getString(AppKey.keyCurrentLanguage,
         defaultValue: Language.english.languageCode);
     return Language.getLanguageByCode(code);
   }
 
   Future<void> setSelectedLanguage(Language language) async {
-    await _prefHelper.setString(keyCurrentLanguage, language.languageCode);
+    await _prefHelper.setString(AppKey.keyCurrentLanguage, language.languageCode);
   }
 
   Future<void> logoutUser() async {

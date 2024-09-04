@@ -13,6 +13,7 @@ import 'package:todo_app/core/base/dimensions.dart';
 import 'package:todo_app/core/base/dimensions_mobile.dart';
 import 'package:todo_app/core/constant/app_color.dart';
 import 'package:todo_app/core/constant/app_text.dart';
+import 'package:todo_app/core/constant/pref_keys.dart';
 import 'package:todo_app/core/di/dependencies.dart';
 import 'package:todo_app/core/flavor/flavor_config.dart';
 import 'package:todo_app/core/synch_service.dart';
@@ -48,7 +49,6 @@ void mainCommon(FlavorConfig config) async {
   Workmanager().initialize(
     callbackDispatcher, // The top-level function that is called by the workmanager
   );
-  _syncData();
   runApp(const MyApp());
 }
 
@@ -62,19 +62,28 @@ void mainCommon(FlavorConfig config) async {
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
-    // This is the function that will be executed in the background
+
+    // Print the task and inputData for debugging
+    print("Executing task: $task with inputData: $inputData");
     switch (task) {
       case AppConst.syncService:
         print("This is a simple periodic task");
-        _syncData();
+        if(inputData!=null){
+          Map <String, dynamic> inputValue= inputData;
+          final RemoteDataSource remoteDataSource = inputValue[AppKey.remoteDataSource];
+          final LocalDataSource localDataSource = inputValue[AppKey.localDataSource];
+          final InternetConnectionChecker connectionChecker  = inputValue[AppKey.connectionChecker];
+          _syncData(remoteDataSource: remoteDataSource,localDataSource: localDataSource,connectionChecker: connectionChecker);
+        }
+
         break;
     }
     return Future.value(true);
   });
 }
 
-_syncData(){
-  TaskSyncManager taskSyncManager = injector();
+_syncData({ required RemoteDataSource remoteDataSource, required LocalDataSource localDataSource, required InternetConnectionChecker connectionChecker}){
+  TaskSyncManager taskSyncManager = TaskSyncManager(remoteDataSource: remoteDataSource, localDataSource: localDataSource, connectionChecker: connectionChecker);
   taskSyncManager.syncTasksAndFetchLatest();
 }
 
