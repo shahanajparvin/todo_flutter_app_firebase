@@ -31,7 +31,7 @@ class TaskListItem extends StatelessWidget {
         onUpdate: () {
           modalController.showModal(
             context,
-            AddTaskWidget(modalController: modalController, taskBloc: taskBloc,task: task,buildContext: context,),
+            AddTaskWidget(modalController: modalController, taskBloc: taskBloc,task: task,),
           );
         },
         child:Container(

@@ -56,6 +56,13 @@ class AppColor {
 
   static const Color deleteBgColor = Color(0xffFFDAD7);
 
+  static final kBackGroundShadow = BoxShadow(
+    color: const Color(0xFFABB0AC).withOpacity(0.25),
+    blurRadius: 70,
+    offset: const Offset(0, 4),
+    spreadRadius: 0,
+  );
+
 
 
 

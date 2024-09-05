@@ -35,12 +35,6 @@ class TodoRepositoryImpl extends TodoRepository {
       }
       return SuccessResponse(data: data);
     }
-    final data = await localDataSource.getTasks();
-    if (data == null) {
-      return const ErrorResponse(
-          errorMessage: "Please check your internet connection");
-    }
-    return SuccessResponse(data: data);
   }
 
   @override
@@ -51,20 +45,13 @@ class TodoRepositoryImpl extends TodoRepository {
       return response;
     } else {
       final data = await localDataSource.addTask(task);
+      print('-----------dataaa ss' + data.toString());
       if (data == null) {
         return const ErrorResponse(
             errorMessage: "Please check your internet connection");
       }
       return SuccessResponse(data: data);
     }
-
-    final data = await localDataSource.addTask(task);
-    print('-----------data ' + data.toString());
-    if (data == null) {
-      return const ErrorResponse(
-          errorMessage: "Please check your internet connection");
-    }
-    return SuccessResponse(data: data);
   }
 
   @override
@@ -152,11 +139,11 @@ class TodoRepositoryImpl extends TodoRepository {
     String id = map['id'];
     bool isCompleted = map['isCompleted'];
 
-   /* if (!(id.contains('local'))&&await connectionChecker.isConnected()) {
-    final response = await remoteDataSource.u(id);
+    if (!(id.contains('local'))&&await connectionChecker.isConnected()) {
+    final response = await remoteDataSource.updateIsCompleted(id,isCompleted);
     print('-----------response ' + response.toString());
     return response;
-    } else */if((id.contains('local'))){
+    } else if((id.contains('local'))){
     final data = await localDataSource.updateIsCompleted(id,isCompleted);
     print('----------data '+data.toString());
     if (data == null) {

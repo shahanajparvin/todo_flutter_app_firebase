@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -50,7 +51,9 @@ void mainCommon(FlavorConfig config) async {
   Workmanager().initialize(
     callbackDispatcher, // The top-level function that is called by the workmanager
   );
-  _syncData(localDataSource: injector(),remoteDataSource: injector(),connectionChecker: injector());
+  LocalDataSource localDataSource = injector();
+  await localDataSource.clearLatestData();
+ /* _syncData(localDataSource: injector(),remoteDataSource: injector(),connectionChecker: injector());*/
   runApp(const MyApp());
 }
 
@@ -75,7 +78,7 @@ void callbackDispatcher() {
           final RemoteDataSource remoteDataSource = inputValue[AppKey.remoteDataSource];
           final LocalDataSource localDataSource = inputValue[AppKey.localDataSource];
           final InternetConnectionChecker connectionChecker  = inputValue[AppKey.connectionChecker];
-          _syncData(remoteDataSource: remoteDataSource,localDataSource: localDataSource,connectionChecker: connectionChecker);
+         /* _syncData(remoteDataSource: remoteDataSource,localDataSource: localDataSource,connectionChecker: connectionChecker);*/
         }
 
         break;
@@ -201,9 +204,23 @@ class _MyAppState extends State<MyApp> {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           locale: state.selectedLanguage.locale,
-          builder: (BuildContext context, child) {
-            return child!;
-          },
+      builder: (BuildContext context,  child) {
+        EasyLoading.instance
+          ..maskType = EasyLoadingMaskType.custom
+          ..displayDuration = const Duration(milliseconds: 1)
+          ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+          ..loadingStyle = EasyLoadingStyle.custom
+          ..indicatorSize = 45.0
+          ..radius = 5.0
+          ..progressColor = Colors.yellow
+          ..backgroundColor = AppColor.whiteColor
+          ..indicatorColor =  AppColor.themeColor
+          ..textColor = AppColor.themeColor
+          ..maskColor = Colors.black.withOpacity(0.7)
+          ..userInteractions = false;
+
+        return FlutterEasyLoading(child: child);
+      },
         );
   }
 }

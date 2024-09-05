@@ -106,6 +106,23 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     }
   }
 
+  @override
+  Future<Response<String>> updateIsCompleted(String id, bool isCompleted) async {
+    try {
+      print('----------id '+id.toString());
+      DocumentReference docRef = fireStore.collection('tasks').doc(id);
+      await docRef.update({
+        'isCompleted': isCompleted,
+      });
+      String newTaskId = docRef.id;
+      print('----------newTaskId '+newTaskId.toString());
+      return SuccessResponse<String>(data: id);
+    } catch (e) {
+      print('Error adding task: $e');
+      return ErrorResponse<String>(errorMessage: 'Error updating status');
+    }
+  }
+
 
 
 }

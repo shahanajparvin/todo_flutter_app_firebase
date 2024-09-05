@@ -12,5 +12,4 @@ class LangUtility{
     return selectedLanguage.languageCode;
   }
 
-
 }

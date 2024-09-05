@@ -13,13 +13,15 @@ import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 class DateInputWidget extends StatelessWidget {
 
   final TextEditingController dateController;
+  final GlobalKey<FormFieldState<String>>? textFieldKey;
 
-  const DateInputWidget({super.key, required this.dateController});
+  const DateInputWidget({super.key, required this.dateController, this.textFieldKey});
 
   @override
   Widget build(BuildContext context) {
     return  Flexible(
         child: TextInputField(
+          textFieldKey: textFieldKey,
           icon: Icons.calendar_month,
           label: context.text.date,
           inputController: dateController,
@@ -50,6 +52,7 @@ class DateInputWidget extends StatelessWidget {
       AppSettings appSettings = injector();
       Language selectedLanguage = appSettings.getSelectedLanguage();
       dateController.text = DateFormat('dd/MM/yy',selectedLanguage.languageCode).format(picked);
+      textFieldKey!.currentState!.validate();
     }
   }
 }

@@ -51,7 +51,7 @@ class ChangeLanguageViewState extends State<ChangeLanguageView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AppCloseIcon(modalController: widget.modalController),
-          _getSubtitle(),
+          _getTitle(),
           Gap(AppHeight.s25),
            Divider(
             height: .5,
@@ -138,11 +138,10 @@ class ChangeLanguageViewState extends State<ChangeLanguageView> {
     );
   }
 
-  Widget _getSubtitle() {
+  Widget _getTitle() {
     return Text(
       context.text.select_preferred_language,
-      style: context.textTheme.bodyLarge
-          ?.copyWith(color: context.themeColorScheme().onSurfaceVariant),
+      style: TextStyle(fontWeight: FontWeight.w500,fontSize: AppTextSize.s18),
     );
   }
 }

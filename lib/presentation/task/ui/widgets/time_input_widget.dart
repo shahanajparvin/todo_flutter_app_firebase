@@ -10,13 +10,15 @@ import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 class TimeInputWidget extends StatelessWidget {
 
   final TextEditingController timeController;
+  final GlobalKey<FormFieldState<String>>? textFieldKey;
 
-  const TimeInputWidget({super.key, required this.timeController});
+  const TimeInputWidget({super.key, required this.timeController, this.textFieldKey});
 
   @override
   Widget build(BuildContext context) {
     return  Flexible(
         child: TextInputField(
+          textFieldKey: textFieldKey,
           icon: Icons.schedule,
           label: context.text.time,
           inputController: timeController,
@@ -57,6 +59,7 @@ class TimeInputWidget extends StatelessWidget {
 
       final formattedTime = DateFormat('hh:mm a',LangUtility.getLanCode()).format(selectedTime);
       timeController.text = formattedTime;
+      textFieldKey!.currentState!.validate();
     }
   }
 }

@@ -76,6 +76,26 @@ class Task {
     };
   }
 
+  Task copyWith({
+    String? id,
+    String? title,
+    String? description,
+    bool? isCompleted,
+    String? date,
+    String? time,
+    String? category,
+  }) {
+    return Task(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      isCompleted: isCompleted ?? this.isCompleted,
+      date: date ?? this.date,
+      time: time ?? this.time,
+      category: category ?? this.category,
+    );
+  }
+
 
 
 }

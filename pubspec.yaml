@@ -65,6 +65,8 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_slidable: ^3.1.1
   flutter_svg: ^2.0.0
+  flutter_easyloading: ^3.0.5
+  another_flushbar: ^1.12.30
 
 
 

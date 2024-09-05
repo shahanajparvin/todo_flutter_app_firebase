@@ -21,7 +21,7 @@
   "delete": "Delete",
   "no": "No",
   "delete_task": "Do you really want to delete\nthis task?",
-  "select_preferred_language": "Select your preferred language.",
+  "select_preferred_language": "Select your preferred language",
   "new_task": "New Task",
   "working": "Working",
   "general": "General",
@@ -30,6 +30,19 @@
   "hi": "Hi",
   "save": "Save",
   "no_task": "No Task",
-  "no_task_des": "Sorry! There's nothing on your to-do list.\nYou’ve accomplished everything for now!"
+  "no_task_des": "Sorry! There's nothing on your to-do list.\nYou’ve accomplished everything for now!",
+
+  "fail_delete": "Failed to delete task.",
+  "success_delete" : "The task has been deleted",
+
+  "fail_update": "Failed to update task.",
+  "success_update" : "The task has been updated",
+
+  "fail_add": "Failed to added task.",
+  "success_add" : "A new task has been added.",
+
+
+  "fail_status": "Failed to updated status.",
+  "success_status" : "A task status has been added."
 
 }

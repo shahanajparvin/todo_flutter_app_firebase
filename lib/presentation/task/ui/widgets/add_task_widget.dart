@@ -50,6 +50,10 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   final _descriptionKey = GlobalKey<FormFieldState<String>>();
 
+  final _dateKey = GlobalKey<FormFieldState<String>>();
+
+  final _timeKey = GlobalKey<FormFieldState<String>>();
+
    String? _selectedValue;
 
   @override
@@ -63,8 +67,6 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       _timeController.text = DateTimeUtility.stringConvertToATimeLocalization(timeString: widget.task!.time,parseCode: 'en');
       _selectedValue = localizeCategory(widget.buildContext!,widget.task!.category);
     }
-
-
   }
 
   String localizeCategory(BuildContext context, String category){
@@ -102,7 +104,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                 children: [
                   Gap(AppHeight.s25),
                   AppCloseIcon(modalController: widget.modalController),
-                  Gap(AppHeight.s25),
+                  Gap(AppHeight.s20),
                   TextInputField(
                     textFieldKey: _titleKey,
                     label: context.text.title_task,
@@ -128,9 +130,11 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   ),
                   Gap(AppHeight.s20),
                   Row(children: [
-                    DateInputWidget(dateController:_dateController),
+                    DateInputWidget(dateController:_dateController,
+                    textFieldKey: _dateKey,
+                    ),
                     Gap(AppWidth.s20),
-                    TimeInputWidget(timeController: _timeController,)
+                    TimeInputWidget(timeController: _timeController,textFieldKey: _timeKey,)
                   ]),
                   Gap(AppHeight.s20),
 
@@ -154,7 +158,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                         }else{
                           final task = Task(
                               title: _titleController.text,
-                              description: _descriptionController.text,
+                              description: _descriptionController.text.isNotEmpty? _descriptionController.text:'',
                               date: DateTimeUtility.stringConvertToDateLocalization(dateString: _dateController.text,lanCode: 'en'),
                               time: DateTimeUtility.stringConvertToATimeLocalization(timeString: _timeController.text,lanCode: 'en'),
                               isCompleted: false,
@@ -192,6 +196,13 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       return AppKey.learning;
     }
     return AppKey.general;
+  }
+
+  Widget _getTitle() {
+    return Text(
+      context.text.new_task,
+      style: TextStyle(fontWeight: FontWeight.w500,fontSize: AppTextSize.s18),
+    );
   }
 
 

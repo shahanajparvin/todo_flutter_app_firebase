@@ -12,6 +12,8 @@ abstract class RemoteDataSource {
 
   Future<Response<Task>> updateTask(String id, Task task);
 
+  Future<Response<String>> updateIsCompleted(String id, bool isCompleted);
+
   Future<Response<String>> deleteTask(String id);
 
 }

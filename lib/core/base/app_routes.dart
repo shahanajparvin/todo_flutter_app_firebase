@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_app/core/utils/app_context.dart';
 import 'package:todo_app/presentation/home/home_page.dart';
 import 'package:todo_app/presentation/splash/splash_page.dart';
 
@@ -18,6 +19,7 @@ GoRouter provideGoRoute() {
         }
         return null;
       },*/
+      navigatorKey: AppContext.navigatorKey,
       initialLocation: "/home",
       debugLogDiagnostics: kDebugMode,
       routes: [

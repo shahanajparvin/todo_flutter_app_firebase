@@ -19,8 +19,10 @@ class TextInputField extends StatelessWidget {
   final bool readOnly;
   final GestureTapCallback? onTap;
   final String? errorText;
+  final TextInputAction? textInputAction;
 
-   TextInputField({super.key,  this.textFieldKey, required this.inputController, required this.hintText, required this.label,this.maxLine = 1, this.icon,  this.readOnly = false, this.onTap, this.errorText});
+
+  const TextInputField({super.key, this.textFieldKey, required this.inputController, required this.hintText, required this.label,this.maxLine = 1, this.icon,  this.readOnly = false, this.onTap, this.errorText, this.textInputAction});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,12 @@ class TextInputField extends StatelessWidget {
         Gap(AppHeight.s10),
         SizedBox(
           child: TextFormField(
-            key: textFieldKey, // Assign the key to the TextFormField
+            textInputAction: textInputAction ?? TextInputAction.next,
+            key: textFieldKey,
+            onEditingComplete: (){
+              if(textFieldKey!=null)
+              textFieldKey!.currentState!.validate();
+            },
             style: context.textTheme.bodyLarge?.copyWith(
                 color: AppColor.darkBlue,
                 fontSize: AppTextSize.s14,
@@ -76,9 +83,6 @@ class TextInputField extends StatelessWidget {
               ),
 
             ),
-            onChanged: (v){
-               /*textFieldKey.currentState?.validate();*/
-            },
             validator: errorText!=null?(value) {
               print('----valid ');
               if (value == null || value.isEmpty) {

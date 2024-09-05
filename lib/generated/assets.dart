@@ -2,6 +2,8 @@
 class Assets {
   Assets._();
 
-  static const String lottie1 = 'assets/lottie/1.json';
+  static const String iconsIcArLang = 'assets/icons/ic_ar_lang.png';
+  static const String iconsIcEnLang = 'assets/icons/ic_en_lang.png';
+  static const String iconsIcUser = 'assets/icons/ic_user.png';
 
 }
