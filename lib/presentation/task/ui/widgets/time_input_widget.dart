@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
+import 'package:todo_app/core/utils/language_code_utility.dart';
 import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 
 class TimeInputWidget extends StatelessWidget {
@@ -33,7 +34,7 @@ class TimeInputWidget extends StatelessWidget {
     final text = timeController.text;
     if (text.isNotEmpty) {
       // Parse the time using the DateFormat
-      final dateTime = DateFormat('hh:mm a').parse(text);
+      final dateTime = DateFormat('hh:mm a',LangUtility.getLanCode()).parse(text);
       return TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
     } else {
       // If the controller is empty, use the current time
@@ -54,7 +55,7 @@ class TimeInputWidget extends StatelessWidget {
       final now = DateTime.now();
       final selectedTime = DateTime(now.year, now.month, now.day, picked.hour, picked.minute);
 
-      final formattedTime = DateFormat('hh:mm a').format(selectedTime);
+      final formattedTime = DateFormat('hh:mm a',LangUtility.getLanCode()).format(selectedTime);
       timeController.text = formattedTime;
     }
   }

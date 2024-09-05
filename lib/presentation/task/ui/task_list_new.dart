@@ -120,7 +120,7 @@ class _TaskListState extends State<HomePageChild> {
                   return Center(child: NoResultsScreen(onPressCallBack: () {
                     modalController.showModal(
                       context,
-                      AddTaskWidget(modalController: modalController, taskBloc: widget.taskBloc,),
+                      AddTaskWidget(modalController: modalController, taskBloc: widget.taskBloc),
                     );
                   }));
                 }

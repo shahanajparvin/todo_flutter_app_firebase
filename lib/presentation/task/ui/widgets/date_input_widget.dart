@@ -2,8 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/core/base/app_settings.dart';
 import 'package:todo_app/core/constant/app_text.dart';
+import 'package:todo_app/core/di/injector.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
+import 'package:todo_app/core/utils/language_code_utility.dart';
+import 'package:todo_app/domain/entities/language.dart';
 import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 
 class DateInputWidget extends StatelessWidget {
@@ -32,7 +36,7 @@ class DateInputWidget extends StatelessWidget {
   Future<void> _selectDate(BuildContext context) async {
     DateTime? initialDate;
     try {
-      initialDate = DateFormat('dd/MM/yy').parse(dateController.text);
+      initialDate = DateFormat('dd/MM/yy',LangUtility.getLanCode()).parse(dateController.text);
     } catch (e) {
       initialDate = DateTime.now(); // Fallback to current date if parsing fails
     }
@@ -43,7 +47,9 @@ class DateInputWidget extends StatelessWidget {
       lastDate: DateTime(2101),
     );
     if (picked != null) {
-      dateController.text = DateFormat('dd/MM/yy').format(picked);
+      AppSettings appSettings = injector();
+      Language selectedLanguage = appSettings.getSelectedLanguage();
+      dateController.text = DateFormat('dd/MM/yy',selectedLanguage.languageCode).format(picked);
     }
   }
 }

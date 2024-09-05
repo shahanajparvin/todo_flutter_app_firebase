@@ -50,7 +50,7 @@ void mainCommon(FlavorConfig config) async {
   Workmanager().initialize(
     callbackDispatcher, // The top-level function that is called by the workmanager
   );
- /* _syncData(localDataSource: injector(),remoteDataSource: injector(),connectionChecker: injector());*/
+  _syncData(localDataSource: injector(),remoteDataSource: injector(),connectionChecker: injector());
   runApp(const MyApp());
 }
 

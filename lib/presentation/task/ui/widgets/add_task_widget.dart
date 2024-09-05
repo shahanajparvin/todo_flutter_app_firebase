@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/core/constant/app_color.dart';
 import 'package:todo_app/core/constant/app_size.dart';
 import 'package:todo_app/core/constant/app_text.dart';
+import 'package:todo_app/core/constant/pref_keys.dart';
+import 'package:todo_app/core/date_time_utility.dart';
 import 'package:todo_app/core/di/injector.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
@@ -20,14 +22,13 @@ import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 import 'package:todo_app/presentation/task/ui/widgets/time_input_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-
 class AddTaskWidget extends StatefulWidget {
   final ModalController modalController;
   final TaskBloc taskBloc;
   final Task? task;
+  final BuildContext? buildContext;
 
-  const AddTaskWidget({super.key, required this.modalController, required this.taskBloc,  this.task});
+  const AddTaskWidget({super.key, required this.modalController, required this.taskBloc,  this.task,this.buildContext});
 
   @override
   State<AddTaskWidget> createState() => _AddTaskWidgetState();
@@ -43,7 +44,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   final TextEditingController _timeController = TextEditingController();
 
-  final _titlekey = GlobalKey<FormFieldState<String>>();
+  final _titleKey = GlobalKey<FormFieldState<String>>();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -56,15 +57,25 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     super.initState();
 
     if(widget.task!=null){
-      print('- widget.task!.category '+ widget.task!.category.toString());
       _titleController.text = widget.task!.title;
       _descriptionController.text = widget.task!.description;
-      _dateController.text = widget.task!.date;
-      _timeController.text = widget.task!.time;
-      _selectedValue = widget.task!.category;
+      _dateController.text = DateTimeUtility.stringConvertToDateLocalization(dateString: widget.task!.date,parseCode: 'en');
+      _timeController.text = DateTimeUtility.stringConvertToATimeLocalization(timeString: widget.task!.time,parseCode: 'en');
+      _selectedValue = localizeCategory(widget.buildContext!,widget.task!.category);
     }
 
 
+  }
+
+  String localizeCategory(BuildContext context, String category){
+    if(category==AppKey.working){
+      return context.text.working;
+    }else if(category==AppKey.general){
+      return context.text.general;
+    }else if(category==AppKey.learning){
+      return context.text.learning;
+    }
+    return category;
   }
 
 
@@ -93,7 +104,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   AppCloseIcon(modalController: widget.modalController),
                   Gap(AppHeight.s25),
                   TextInputField(
-                    textFieldKey: _titlekey,
+                    textFieldKey: _titleKey,
                     label: context.text.title_task,
                     inputController: _titleController,
                     hintText: context.text.title_hint,
@@ -135,19 +146,19 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                               id: widget.task!.id,
                               title: _titleController.text,
                               description: _descriptionController.text,
-                              date: _dateController.text,
-                              time: _timeController.text,
+                              date: DateTimeUtility.stringConvertToDateLocalization(dateString: _dateController.text,lanCode: 'en'),
+                              time: DateTimeUtility.stringConvertToATimeLocalization(timeString: _timeController.text,lanCode: 'en'),
                               isCompleted: widget.task!.isCompleted,
-                              category: _selectedValue!=null?_selectedValue!:'');
+                              category: _selectedValue!=null?deLocalizeCategory(context,_selectedValue!):'');
                           _updateTask(task);
                         }else{
                           final task = Task(
                               title: _titleController.text,
                               description: _descriptionController.text,
-                              date: _dateController.text,
-                              time: _timeController.text,
+                              date: DateTimeUtility.stringConvertToDateLocalization(dateString: _dateController.text,lanCode: 'en'),
+                              time: DateTimeUtility.stringConvertToATimeLocalization(timeString: _timeController.text,lanCode: 'en'),
                               isCompleted: false,
-                              category: _selectedValue!=null?_selectedValue!:'');
+                              category: _selectedValue!=null?deLocalizeCategory(context,_selectedValue!):'');
                           _addTask(task);
                         }
                       }
@@ -170,6 +181,17 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
         UpdateTask(
             task.id!, task));
     widget.modalController.closeModal(context);
+  }
+
+  String deLocalizeCategory(BuildContext context, String category){
+    if(category==context.text.working){
+      return AppKey.working;
+    }else if(category==context.text.general){
+      return AppKey.general;
+    }else if(category==context.text.learning){
+      return AppKey.learning;
+    }
+    return AppKey.general;
   }
 
 

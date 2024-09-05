@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:todo_app/core/constant/app_color.dart';
 import 'package:todo_app/core/constant/app_size.dart';
+import 'package:todo_app/core/constant/pref_keys.dart';
+import 'package:todo_app/core/date_time_utility.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
 import 'package:todo_app/domain/entities/task.dart';
@@ -20,6 +22,7 @@ class TaskListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     TextDirection direction = Directionality.of(context);
     return SlidableListItem(
         onDelete:(){
@@ -28,7 +31,7 @@ class TaskListItem extends StatelessWidget {
         onUpdate: () {
           modalController.showModal(
             context,
-            AddTaskWidget(modalController: modalController, taskBloc: taskBloc,task: task,),
+            AddTaskWidget(modalController: modalController, taskBloc: taskBloc,task: task,buildContext: context,),
           );
         },
         child:Container(
@@ -91,15 +94,13 @@ class TaskListItem extends StatelessWidget {
                           Icon(Icons.calendar_today,
                               size: 16.0),
                           SizedBox(width: 4.0),
-                          Directionality(
-                            textDirection: TextDirection.ltr, // Force LTR layout
-                            child:Text(task.date)),
+                          Text(DateTimeUtility.stringConvertToDateLocalization(dateString: task.date,parseCode: 'en')),
+
                           SizedBox(width: 16.0),
                           Icon(Icons.access_time, size: 16.0),
                           SizedBox(width: 4.0),
-                          Directionality(
-                                textDirection: TextDirection.ltr, // Force LTR layout
-                                child:Text(task.time)),
+                          Text(DateTimeUtility.stringConvertToATimeLocalization(timeString: task.time,parseCode: 'en')),
+
                           Spacer(),
                           Text(
                             localizeCategory(context,task.category),
@@ -121,12 +122,12 @@ class TaskListItem extends StatelessWidget {
   }
 
   String localizeCategory(BuildContext context, String category){
-    if(category=='Working'){
+    if(category==AppKey.working){
       return context.text.working;
-    }else if(category=='General'){
-      return context.text.working;
-    }else if(category=='General'){
-      return context.text.working;
+    }else if(category==AppKey.general){
+      return context.text.general;
+    }else if(category==AppKey.learning){
+      return context.text.learning;
     }
     return category;
   }

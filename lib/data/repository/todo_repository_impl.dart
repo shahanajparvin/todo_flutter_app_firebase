@@ -23,7 +23,7 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<List<Task>>> getTasks() async {
-    /*if (await connectionChecker.isConnected()) {
+    if (await connectionChecker.isConnected()) {
       final response = await remoteDataSource.getTasks();
       print('-----------response ' + response.toString());
       return response;
@@ -34,7 +34,7 @@ class TodoRepositoryImpl extends TodoRepository {
             errorMessage: "Please check your internet connection");
       }
       return SuccessResponse(data: data);
-    }*/
+    }
     final data = await localDataSource.getTasks();
     if (data == null) {
       return const ErrorResponse(
@@ -45,7 +45,7 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<Task>> addTask(Task task) async {
-  /*  if (await connectionChecker.isConnected()) {
+    if (await connectionChecker.isConnected()) {
       final response = await remoteDataSource.addTask(task);
       print('-----------response ' + response.toString());
       return response;
@@ -56,7 +56,7 @@ class TodoRepositoryImpl extends TodoRepository {
             errorMessage: "Please check your internet connection");
       }
       return SuccessResponse(data: data);
-    }*/
+    }
 
     final data = await localDataSource.addTask(task);
     print('-----------data ' + data.toString());

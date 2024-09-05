@@ -15,4 +15,10 @@ class AppKey {
 
   static const keyCurrentLanguage = "current_language";
 
+
+  static const working = "Working";
+  static const learning = "Learning";
+  static const general = "General";
+
+
 }
