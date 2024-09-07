@@ -1,19 +1,77 @@
-# todo_app
+# Flutter ToDo App
 
-A new Flutter project.
+## Overview
+This Flutter-based ToDo app allows users to manage tasks both online and offline, with seamless synchronization to Firebase. It is designed using clean architecture and incorporates app flavors for different environments (e.g., development, staging, production). The project uses `flutter_bloc` for state management, supports localization in English and Arabic, and implements complex animations while optimizing performance.
 
-## Getting Started
+## Project Architecture
+The project follows the Clean Architecture pattern, ensuring separation of concerns and scalability. Flavors are integrated to handle environment-specific configurations.
 
-This project is a starting point for a Flutter application.
+### The layers include:
+- **Presentation Layer**: UI, BLoC (Business Logic Component), and localization.
+- **Domain Layer**: Entities, repositories, and use cases.
+- **Data Layer**: Firebase, local database (Floor), and background syncing.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Core Features:
+- Task management: Add, update, delete, and view tasks.
+- Offline-first with background sync every 6 hours using `flutter_workmanager`.
+- Automatic sync when internet connectivity changes from offline to online.
+- Smooth, complex animations.
+- Localization in English and Arabic.
+- Username setup and update.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Flavors:
+- **Development**: For internal testing, connected to a test Firebase environment.
+- **Staging**: For pre-production testing, mimicking production settings but connected to a different Firebase instance.
+- **Production**: For the final app release, connected to the production Firebase environment.
+
+## State Management
+State management is handled using the `flutter_bloc` package, ensuring a clear separation between UI and business logic.
+
+**Key BLoC instances**:
+- **TaskBloc**: Handles task addition, updates, deletions, and syncing.
+- **LanguageBloc**: Manages dynamic language switching between English and Arabic.
+- **UsernameBloc**: Manages the user's name displayed on the home page.
+
+## Database
+- **Local Database (Floor)**: Tasks are saved locally for offline access.
+- **Remote Database (Firebase Firestore)**: Tasks are synchronized with Firebase.
+
+The app ensures that the local and remote databases stay in sync using background syncing and reactive updates on network changes.
+
+## Offline Sync
+The app uses the `flutter_workmanager` package to sync tasks with Firebase every 6 hours. If the network status changes from offline to online, tasks are immediately synchronized.
+
+**Sync Conditions**:
+- Background sync runs every 6 hours.
+- Internet connection change triggers immediate sync.
+
+## Localization
+The app supports both English and Arabic using the `intl` package. Language switching is dynamic, managed by `LanguageBloc`.
+
+- The app displays all labels, buttons, and text in the selected language, except for user input like task titles and descriptions.
+- Localization applies to the entire UI, including dates and times.
+
+## User Interface
+The app’s UI focuses on delivering a smooth user experience with animations, while optimizing for memory efficiency.
+
+**Key UI elements**:
+- **Splash Screen**: Username input and language selection.
+- **Task Screens**: Add, update, delete, and view tasks.
+- **Animations**: Transitions and user interactions are animated, ensuring performance remains smooth.
+
+## App Flavors
+Flavors are used to configure the app for different environments: development, staging, and production. This ensures environment-specific configurations such as Firebase connections, API endpoints, and other settings.
+
+### Flavor Configuration
+Each flavor has its own Firebase configuration and environment settings:
+
+
+- **Staging**: Used for pre-release testing, mimicking production conditions.
+- **Production**: The live version of the app for end-users.
+
+
 
 To Generate Translation:
 
