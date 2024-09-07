@@ -48,7 +48,6 @@ class Task {
 
   factory Task.fromDocument(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-    print(data['isCompleted']);
     bool isCompleted= false;
     if(data['isCompleted']!=null&&(data['isCompleted']==true||data['isCompleted']==false)){
       isCompleted = data['isCompleted'];

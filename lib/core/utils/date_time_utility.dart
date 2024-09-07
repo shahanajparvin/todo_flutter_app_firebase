@@ -20,7 +20,6 @@ class DateTimeUtility{
     Language selectedLanguage = appSettings.getSelectedLanguage();
     DateTime parsedDate = DateFormat('MM/dd/yyyy', parseCode ?? selectedLanguage.languageCode ).parse(dateString);
     String formattedString = DateFormat('MM/dd/yyyy',lanCode ?? selectedLanguage.languageCode).format(parsedDate);
-    print(formattedString); // Output: 12/12/2024
     return formattedString;
 
   }
@@ -30,7 +29,6 @@ class DateTimeUtility{
     Language selectedLanguage = appSettings.getSelectedLanguage();
     DateTime parsedTime = DateFormat('h:mm a',parseCode ?? selectedLanguage.languageCode ).parse(timeString);
     String formattedTimeString = DateFormat('h:mm a',lanCode ?? selectedLanguage.languageCode).format(parsedTime);
-    print(formattedTimeString); // Output: 10:12 PM
     return formattedTimeString;
   }
 }

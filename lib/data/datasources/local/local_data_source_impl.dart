@@ -35,12 +35,10 @@ class LocalDataSourceImpl extends LocalDataSource {
   Future<Task?> addTask(Task task) async {
     TaskEntity? taskEntity = DomainToDbTransformer.transformTask(task,isSynced: false);
     if (taskEntity != null) {
-      print('-----------fsdfsfs');
       try {
         await _dbHelper.addTask(taskEntity);
         return DbToDomainTransformer.transformTask(taskEntity);
       } on Exception catch (error, trace) {
-        print('------------erroree '+error.toString());
         return null;
       }
     }
@@ -80,7 +78,6 @@ class LocalDataSourceImpl extends LocalDataSource {
   @override
   Future<List<Task>?> getUnsynchedTasks() async {
     List<TaskEntity>? tasks = await _dbHelper.getUnsyncedTasks();
-    print('--------------get all tasks '+tasks.toString());
     if (tasks == null || tasks.isEmpty) {
       return null;
     }

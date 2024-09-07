@@ -87,7 +87,6 @@ class TextInputField extends StatelessWidget {
 
             ),
             validator: errorText!=null?(value) {
-              print('----valid ');
               if (value == null || value.isEmpty) {
                 return errorText;
               }

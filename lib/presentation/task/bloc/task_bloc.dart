@@ -29,7 +29,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       this.deleteTaskUseCase, this.unSyncedTaskUseCase,
       this.updateIsCompletedUseCase) : super(TaskInitial()) {
     on<FetchTasks>(_onFetchTasks);
-    on<FetchUnsynchedTasks>(_onFetchUnSyncedTasks);
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
     on<DeleteTask>(_onDeleteTask);
@@ -41,14 +40,9 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     emit(TaskLoading());
     try {
       Response<List<Task>> response = await getTasksUseCase.execute();
-      print('-------response ' + response.toString());
       if (response is SuccessResponse<List<Task>>) {
         List<Task> taskList = response
             .data; // `.data` should be accessible here
-        taskList.forEach((task) {
-          print(' Task ID: ${task.id},  Task Title: ${task
-              .title}, Task Description: ${task.description}');
-        });
         emit(TaskLoaded(taskList));
       } else {
         emit(TaskLoaded([]));
@@ -58,22 +52,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     }
   }
 
-  Future<void> _onFetchUnSyncedTasks(FetchUnsynchedTasks event,
-      Emitter<TaskState> emit) async {
-    try {
-      Response<List<Task>> response = await unSyncedTaskUseCase.execute();
-      if (response is SuccessResponse<List<Task>>) {
-        List<Task> taskList = response
-            .data; // `.data` should be accessible here
-        taskList.forEach((task) {
-          debugPrint('unsynch Task ID: ${task.id}, Task Title: ${task
-              .title}, Task Description: ${task.description}');
-        });
-      }
-    } catch (e) {
 
-    }
-  }
 
   Future<void> _onAddTask(AddTask event, Emitter<TaskState> emit) async {
     showLoading();
@@ -85,11 +64,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         final currentState = state;
         if (currentState is TaskLoaded) {
           List<Task> updatedTaskList = List.from(currentState.tasks);
-          updatedTaskList.insert(0,newTask); // Add the new task to the list
+          updatedTaskList.add(newTask); // Add the new task to the list
           emit(TaskLoaded(updatedTaskList));
         } else {
           List<Task> updatedTaskList = [];
-          updatedTaskList.insert(0,newTask); // Add the new task to the list
+          updatedTaskList.add(newTask); // Add the new task to the list
           emit(TaskLoaded(updatedTaskList));
         }
         dismissWithMessage(message: getContext().text.success_add,isError: false);
@@ -185,6 +164,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     } catch (e) {
       dismissWithMessage(message: getContext().text.fail_status);
     }
+  }
+
+  Future<void> taskLoadedInList(List<Task> taskList) async {
+    emit(TaskLoaded(taskList));
   }
 
   dismissWithMessage({required String message, bool isError = true}) {

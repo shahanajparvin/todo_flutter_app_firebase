@@ -32,12 +32,10 @@ class DbHelper {
   }
 
   Future<void> saveTakList(List<TaskEntity> tasks) async {
-
     final db = await provider.getDatabase();
     try {
       return await db.taskDao.save(tasks);
     } catch (e, trace) {
-      print('--------error '+ e.toString());
     }
   }
 
@@ -58,7 +56,6 @@ class DbHelper {
     try {
       await db.taskDao.insert(task);;
     } catch (e, trace) {
-      print('------------errorr '+e.toString());
     }
   }
 

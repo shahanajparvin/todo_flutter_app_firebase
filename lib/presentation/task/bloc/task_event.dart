@@ -11,8 +11,6 @@ abstract class TaskEvent extends Equatable {
 
 class FetchTasks extends TaskEvent {}
 
-class FetchUnsynchedTasks extends TaskEvent {}
-
 class AddTask extends TaskEvent {
   final Task task;
 

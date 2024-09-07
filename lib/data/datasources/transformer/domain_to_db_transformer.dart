@@ -47,7 +47,6 @@ class DomainToDbTransformer {
           isSynced: isSynced
       );
     } on Exception catch (error, trace) {
-      print('------------error '+error.toString());
       return null;
     }
   }

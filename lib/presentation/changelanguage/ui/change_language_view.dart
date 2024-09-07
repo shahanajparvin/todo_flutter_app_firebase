@@ -79,7 +79,6 @@ class ChangeLanguageViewState extends State<ChangeLanguageView> {
             child: AppButton(
               label:  context.text.save,
               onPressed: () async {
-                 print(selectedLanguage.toString());
                 AppSettings appSettings = injector();
                 Language lang =
                 Language.getLanguageByCode((selectedLanguage.languageCode));

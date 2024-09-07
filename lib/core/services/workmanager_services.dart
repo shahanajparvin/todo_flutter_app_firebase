@@ -18,10 +18,8 @@ class BackgroundTaskSycServices{
 
   static void callbackDispatcher() {
     Workmanager().executeTask((task, inputData) {
-      print("Executing task: $task with inputData: $inputData");
       switch (task) {
         case AppConst.syncService:
-          print("This is a simple periodic task");
           if(inputData!=null){
             Map <String, dynamic> inputValue= inputData;
             final RemoteDataSource remoteDataSource = inputValue[AppKey.remoteDataSource];

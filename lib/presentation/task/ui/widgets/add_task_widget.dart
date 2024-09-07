@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
-import 'package:todo_app/core/constant/app_color.dart';
 import 'package:todo_app/core/constant/app_size.dart';
-import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/constant/pref_keys.dart';
-import 'package:todo_app/core/date_time_utility.dart';
-import 'package:todo_app/core/di/injector.dart';
+import 'package:todo_app/core/utils/date_time_utility.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
 import 'package:todo_app/domain/entities/task.dart';
 import 'package:todo_app/presentation/common/widgets/app_close_icon.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 import 'package:todo_app/presentation/task/bloc/task_event.dart';
-import 'package:todo_app/presentation/task/ui/task_list_page.dart';
 import 'package:todo_app/presentation/task/ui/widgets/add_task_button_section.dart';
-import 'package:todo_app/presentation/task/ui/widgets/app_button.dart';
 import 'package:todo_app/presentation/task/ui/widgets/category_section_widget.dart';
 import 'package:todo_app/presentation/task/ui/widgets/date_input_widget.dart';
 import 'package:todo_app/presentation/task/ui/widgets/text_input_field.dart';
 import 'package:todo_app/presentation/task/ui/widgets/time_input_widget.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class AddTaskWidget extends StatefulWidget {
   final ModalController modalController;
@@ -199,13 +193,6 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       return AppKey.learning;
     }
     return AppKey.general;
-  }
-
-  Widget _getTitle() {
-    return Text(
-      context.text.new_task,
-      style: TextStyle(fontWeight: FontWeight.w500,fontSize: AppTextSize.s18),
-    );
   }
 
 

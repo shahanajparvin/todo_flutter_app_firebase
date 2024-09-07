@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/core/constant/app_color.dart';
 import 'package:todo_app/core/constant/app_size.dart';
-import 'package:todo_app/core/date_time_utility.dart';
+import 'package:todo_app/core/utils/date_time_utility.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';

@@ -77,10 +77,8 @@ class DefaultFirebaseOptions {
 
   static FirebaseOptions _getAndroidOptions() {
     if (const String.fromEnvironment('FLAVOR') == 'staging') {
-      print('----staging');
       return androidStaging;
     } else {
-      print('----live');
       return androidLive;
     }
   }

@@ -6,6 +6,7 @@ import 'package:todo_app/data/datasources/local/local_data_source.dart';
 import 'package:todo_app/data/datasources/remote/remote_data_source.dart';
 import 'package:todo_app/domain/entities/firebase_response.dart';
 import 'package:todo_app/domain/entities/task.dart';
+import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 
 class TaskSyncManager {
   final RemoteDataSource remoteDataSource;
@@ -18,11 +19,10 @@ class TaskSyncManager {
     required this.connectionChecker,
 });
 
-  Future<Response<List<Task>>> syncTasksAndFetchLatest() async {
+  Future<Response<List<Task>>> syncTasksAndFetchLatest({TaskBloc? taskBloc}) async {
     if (await connectionChecker.isConnected()) {
       try {
        final unsyncedTasks = await localDataSource.getUnsynchedTasks();
-       print('--------------unsyncedTasks '+ unsyncedTasks.toString());
         if (unsyncedTasks != null && unsyncedTasks.isNotEmpty) {
           for (Task task in unsyncedTasks) {
             if (task.id != null && task.id!.contains('local')) {
@@ -42,7 +42,13 @@ class TaskSyncManager {
         // Step 5: Cache the fetched data in the local database
         if (response is SuccessResponse<List<Task>>) {
           await localDataSource.saveTasks(response.data);
+          if(taskBloc!=null){
+            taskBloc.taskLoadedInList(response.data);
+          }
         }
+
+
+
         return response;
       } catch (e) {
         return ErrorResponse(errorMessage: e.toString());

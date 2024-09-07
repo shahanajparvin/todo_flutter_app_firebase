@@ -12,7 +12,6 @@ class DeleteTaskUseCase
 
   @override
   Future<Response<String>> execute() async {
-    print('--------getParam()! '+getParam()!.toString());
     return repository.deleteTask(getParam()!);
   }
 }

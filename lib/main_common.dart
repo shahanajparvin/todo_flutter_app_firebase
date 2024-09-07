@@ -50,33 +50,14 @@ late ApiInspector apiInspector;
 void mainCommon(FlavorConfig config) async {
   flavorConfig = config;
   await init();
-
   runApp(const MyApp());
 }
-
-final checker = InternetConnectionChecker();
-
-void onConnectivityChanged(ConnectivityResult result) {
-  if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi) {
-    print("Connected to the internet.");
-  } else {
-    print("No internet connection.");
-  }
-}
-
-
 
 
 
 void updateLocalization(Language language) async {
   localizations = await AppLocalizations.delegate.load(language.locale);
 }
-
-
-
-
-
-
 
 
 Future<void> init() async {
@@ -89,13 +70,6 @@ Future<void> init() async {
   SharedPreferencesHelper preferencesHelper = injector();
   await preferencesHelper.init();
   BackgroundTaskSycServices.initService();
- /* await injector.registerSingleton<TaskSyncManager>(
-    TaskSyncManager(
-      remoteDataSource: injector(),
-      localDataSource: injector(),
-      connectionChecker: injector(),
-    ),
-  );*/
 }
 
 

@@ -45,7 +45,6 @@ class TodoRepositoryImpl extends TodoRepository {
     if (await connectionChecker.isConnected()) {
       // Add task to remote data source
       final response = await remoteDataSource.addTask(task);
-      print('-----------response ' + response.toString());
 
       // If the task was successfully added to the remote source, also add it to the local data source for later offline access
       if (response is SuccessResponse<Task>) {
@@ -68,7 +67,8 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<Task>> updateTask(Map<String, dynamic> map) async {
-    if (await connectionChecker.isConnected()) {
+    String id = map['id'];
+    if (!(id.contains('local')) && await connectionChecker.isConnected()) {
 
       final response = await remoteDataSource.updateTask(
           map['id'], map['task']);
@@ -90,13 +90,10 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<String>> deleteTask(String id) async {
-    print('-----------delete id  ' + id.toString());
-
     // Check if it's a remote task and if the connection is available
     if (!(id.contains('local')) && await connectionChecker.isConnected()) {
       // Delete from the remote data source
       final remoteResponse = await remoteDataSource.deleteTask(id);
-      print('-----------remoteResponse ' + remoteResponse.toString());
 
       // If successful on the remote source, try deleting it from the local source as well
       if (remoteResponse is SuccessResponse<String>) {
@@ -108,8 +105,6 @@ class TodoRepositoryImpl extends TodoRepository {
 
     // If it's a local task or there is no internet, handle local deletion
     final localResponse = await localDataSource.deleteTask(id);
-    print('----------localResponse ' + localResponse.toString());
-
     // Handle the case where the local deletion failed
     if (localResponse == null) {
       return const ErrorResponse(errorMessage: "Task cannot be deleted");
@@ -127,10 +122,6 @@ class TodoRepositoryImpl extends TodoRepository {
       if (dataResponse is SuccessResponse<List<Task>>) {
         List<Task> taskList = dataResponse
             .data; // `.data` should be accessible here
-        taskList.forEach((task) {
-          debugPrint('Task Title: ${task.title}, Task Description: ${task
-              .description}');
-        });
         await localDataSource.saveTasks(taskList);
       }
     }
@@ -155,7 +146,6 @@ class TodoRepositoryImpl extends TodoRepository {
     if (!(id.contains('local')) && await connectionChecker.isConnected()) {
       // Update the remote data source
       final remoteResponse = await remoteDataSource.updateIsCompleted(id, isCompleted);
-      print('-----------remoteResponse ' + remoteResponse.toString());
 
       // If successful on the remote source, update the local source as well
       if (remoteResponse is SuccessResponse<String>) {
@@ -167,7 +157,6 @@ class TodoRepositoryImpl extends TodoRepository {
 
     // If it's a local task or there is no internet, handle local update
     final localResponse = await localDataSource.updateIsCompleted(id, isCompleted);
-    print('----------localResponse ' + localResponse.toString());
 
     // Handle the case where the local update failed
     if (localResponse == null) {

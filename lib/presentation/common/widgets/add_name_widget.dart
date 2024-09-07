@@ -15,9 +15,11 @@ class AddNameWidget extends StatefulWidget {
   final Function(String) onCallBack;
   final bool isUpdate;
 
-
   const AddNameWidget(
-      {super.key, required this.modalController, required this.onCallBack, required this.isUpdate});
+      {super.key,
+      required this.modalController,
+      required this.onCallBack,
+      required this.isUpdate});
 
   @override
   State<AddNameWidget> createState() => _AddNameWidgetState();
@@ -32,7 +34,7 @@ class _AddNameWidgetState extends State<AddNameWidget> {
     super.initState();
     _formKey = GlobalKey<FormState>();
     nameController = TextEditingController();
-    AppSettings  appSettings = injector();
+    AppSettings appSettings = injector();
     nameController.text = appSettings.getName();
   }
 
@@ -44,33 +46,43 @@ class _AddNameWidgetState extends State<AddNameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SizedBox(
+        width: double.infinity,
+        child: Padding(
+        padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context)
+        .viewInsets
+        .bottom, // Adjust padding for keyboard
+    ),
+    child: SingleChildScrollView(
+    child: Padding(
         padding: EdgeInsets.all(AppHeight.s30),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          AppCloseIcon(modalController: widget.modalController),
-          Gap(AppHeight.s20),
-          Form(
-              key: _formKey,
-              child: TextInputField(
-                maxLength: 25,
-                label: context.text.name,
-                inputController: nameController,
-                hintText: context.text.enter_name,
-                errorText: context.text.title_error,
-              )),
-          Gap(AppHeight.s20),
-          Row(children: [
-            AppButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    widget.onCallBack(nameController.text);
-                  }
-                },
-                labelColor: AppColor.windowBackgroundColor,
-                backGroundColor: AppColor.themeColor,
-                height: AppHeight.s32,
-                label: widget.isUpdate?context.text.update:context.text.save),
-          ])
-        ]));
+                  AppCloseIcon(modalController: widget.modalController),
+                  Gap(AppHeight.s20),
+                  Form(
+          key: _formKey,
+          child: TextInputField(
+            maxLength: 25,
+            label: context.text.name,
+            inputController: nameController,
+            hintText: context.text.enter_name,
+            errorText: context.text.title_error,
+          )),
+                  Gap(AppHeight.s20),
+                  Row(children: [
+        AppButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                widget.onCallBack(nameController.text);
+              }
+            },
+            labelColor: AppColor.windowBackgroundColor,
+            backGroundColor: AppColor.themeColor,
+            height: AppHeight.s32,
+            label:
+                widget.isUpdate ? context.text.update : context.text.save),
+                  ])
+                ])))));
   }
 }

@@ -47,8 +47,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       // Get the ID of the newly added document
       String newTaskId = docRef.id;
 
-      print('----newTaskId '+newTaskId.toString());
-      // Create a new Task object with the Firestore-generated ID
       Task newTask = Task(
         id: newTaskId, // Use the Firestore-generated ID
         title: task.title,
@@ -61,20 +59,17 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       );
       return SuccessResponse<Task>(data: newTask);
     } catch (e) {
-      print('Error adding task: $e');
       return ErrorResponse<Task>(errorMessage: 'No tasks found');
     }
   }
 
   Future<Response<Task>> updateTask(String id, Task task) async {
     try {
-      print('----------id '+id.toString());
       DocumentReference docRef = fireStore.collection('tasks').doc(id);
       await docRef.update(task.toMap());
 
       String newTaskId = docRef.id;
-      print('----------newTaskId '+newTaskId.toString());
-      // Create a new Task object with the Firestore-generated ID
+
       Task newTask = Task(
         id: newTaskId, // Use the Firestore-generated ID
         title: task.title,
@@ -86,7 +81,6 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       );
       return SuccessResponse<Task>(data: newTask);
     } catch (e) {
-      print('Error adding task: $e');
       return ErrorResponse<Task>(errorMessage: 'No tasks found');
     }
   }
@@ -97,11 +91,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<Response<String>> deleteTask(String documentId) async {
     try {
       DocumentReference docRef = FirebaseFirestore.instance.collection('tasks').doc(documentId);
-      // Delete the document
       await docRef.delete();
       return SuccessResponse<String>(data: documentId);
     } catch (e) {
-      print('Error deleting task: $e');
       return ErrorResponse<String>(errorMessage: 'Error deleting task');
     }
   }
@@ -109,16 +101,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   @override
   Future<Response<String>> updateIsCompleted(String id, bool isCompleted) async {
     try {
-      print('----------id '+id.toString());
       DocumentReference docRef = fireStore.collection('tasks').doc(id);
       await docRef.update({
         'isCompleted': isCompleted,
       });
-      String newTaskId = docRef.id;
-      print('----------newTaskId '+newTaskId.toString());
       return SuccessResponse<String>(data: id);
     } catch (e) {
-      print('Error adding task: $e');
       return ErrorResponse<String>(errorMessage: 'Error updating status');
     }
   }
