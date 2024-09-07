@@ -78,28 +78,10 @@ The app supports both English and Arabic using the `intl` package. Language swit
 - The app displays all labels, buttons, and text in the selected language, except for user input like task titles and descriptions.
 - Localization applies to the entire UI, including dates and times.
 
-### To Generate Translations:
+## To Generate Translations
 To generate translations for your app, run the following command:
+
 ```bash
 flutter gen-l10n
 
-
-## Running the App
-
-### To Run Staging:
-```bash
---flavor staging
-
-### To Build Staging Apk
-```bash
-flutter build apk --debug --target lib/main_staging.dart 
-
-
-### To Run Live:
-```bash
---flavor live
-
-### To Build Live Apk
-```bash
-flutter build apk --release --target lib/main_live.dart 
 
