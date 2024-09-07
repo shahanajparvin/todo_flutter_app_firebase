@@ -81,7 +81,32 @@ The app supports both English and Arabic using the `intl` package. Language swit
 ## To Generate Translations
 To generate translations for your app, run the following command:
 
-```bash
+```
 flutter gen-l10n
+```
+
+## Running the App
+
+### To Run Staging:
+```bash
+--flavor staging
+```
+
+
+### To Run Live:
+```bash
+--flavor live
+```
+
+### To Build Staging Apk:
+```bash
+flutter build apk --debug --target lib/main_staging.dart 
+```
+
+
+### To Build Release Apk:
+```bash
+flutter build apk --release --target lib/main_live.dart
+```
 
 
