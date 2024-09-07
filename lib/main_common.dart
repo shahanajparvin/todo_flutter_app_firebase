@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/constant/pref_keys.dart';
 import 'package:todo_app/core/di/dependencies.dart';
 import 'package:todo_app/core/flavor/flavor_config.dart';
-import 'package:todo_app/core/synch_service.dart';
+import 'package:todo_app/core/services/task_sync_service.dart';
+import 'package:todo_app/core/services/workmanager_services.dart';
 import 'package:todo_app/core/utils/internet_connection_checker.dart';
 import 'package:todo_app/core/utils/sharedpreferences_helper.dart';
 import 'package:todo_app/data/datasources/local/local_data_source.dart';
@@ -48,14 +50,21 @@ late ApiInspector apiInspector;
 void mainCommon(FlavorConfig config) async {
   flavorConfig = config;
   await init();
-  Workmanager().initialize(
-    callbackDispatcher, // The top-level function that is called by the workmanager
-  );
-  LocalDataSource localDataSource = injector();
-  await localDataSource.clearLatestData();
- /* _syncData(localDataSource: injector(),remoteDataSource: injector(),connectionChecker: injector());*/
+
   runApp(const MyApp());
 }
+
+final checker = InternetConnectionChecker();
+
+void onConnectivityChanged(ConnectivityResult result) {
+  if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi) {
+    print("Connected to the internet.");
+  } else {
+    print("No internet connection.");
+  }
+}
+
+
 
 
 
@@ -65,32 +74,9 @@ void updateLocalization(Language language) async {
 
 
 
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) {
 
-    // Print the task and inputData for debugging
-    print("Executing task: $task with inputData: $inputData");
-    switch (task) {
-      case AppConst.syncService:
-        print("This is a simple periodic task");
-        if(inputData!=null){
-          Map <String, dynamic> inputValue= inputData;
-          final RemoteDataSource remoteDataSource = inputValue[AppKey.remoteDataSource];
-          final LocalDataSource localDataSource = inputValue[AppKey.localDataSource];
-          final InternetConnectionChecker connectionChecker  = inputValue[AppKey.connectionChecker];
-         /* _syncData(remoteDataSource: remoteDataSource,localDataSource: localDataSource,connectionChecker: connectionChecker);*/
-        }
 
-        break;
-    }
-    return Future.value(true);
-  });
-}
 
-_syncData({ required RemoteDataSource remoteDataSource, required LocalDataSource localDataSource, required InternetConnectionChecker connectionChecker}){
-  TaskSyncManager taskSyncManager = TaskSyncManager(remoteDataSource: remoteDataSource, localDataSource: localDataSource, connectionChecker: connectionChecker);
-  taskSyncManager.syncTasksAndFetchLatest();
-}
 
 
 Future<void> init() async {
@@ -102,13 +88,14 @@ Future<void> init() async {
   await DependencyManager.inject(flavorConfig);
   SharedPreferencesHelper preferencesHelper = injector();
   await preferencesHelper.init();
-  await injector.registerSingleton<TaskSyncManager>(
+  BackgroundTaskSycServices.initService();
+ /* await injector.registerSingleton<TaskSyncManager>(
     TaskSyncManager(
       remoteDataSource: injector(),
       localDataSource: injector(),
       connectionChecker: injector(),
     ),
-  );
+  );*/
 }
 
 

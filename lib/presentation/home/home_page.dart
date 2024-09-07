@@ -6,9 +6,8 @@ import 'package:todo_app/core/di/injector.dart';
 import 'package:todo_app/core/utils/internet_connection_checker.dart';
 import 'package:todo_app/data/datasources/local/local_data_source.dart';
 import 'package:todo_app/data/datasources/remote/remote_data_source.dart';
-import 'package:todo_app/presentation/home/ui/home_view.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
-import 'package:todo_app/presentation/task/ui/task_list_new.dart';
+import 'package:todo_app/presentation/task/ui/task_list_page.dart';
 import 'package:workmanager/workmanager.dart';
 
 
@@ -33,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return HomePageChild(taskBloc: _taskBloc);
+    return TaskListPage(taskBloc: _taskBloc);
   }
 }
 
@@ -50,7 +49,6 @@ void registerTask() {
     AppKey.connectionChecker: connectionChecker,
   };
 
-  print('----------inputData '+inputData.toString());
 
   Workmanager().registerPeriodicTask(
     "1", // Unique identifier for the task

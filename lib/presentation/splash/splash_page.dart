@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/constant/pref_keys.dart';
 import 'package:todo_app/core/di/injector.dart';
-import 'package:todo_app/core/synch_service.dart';
 import 'package:todo_app/core/utils/internet_connection_checker.dart';
 import 'package:todo_app/data/datasources/local/local_data_source.dart';
 import 'package:todo_app/data/datasources/remote/remote_data_source.dart';
@@ -27,15 +26,9 @@ class _SplashPageState extends State<SplashPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-
-      },
-      child: const Scaffold(
+    return const Scaffold(
         body: SplashView(),
-      ),
-    );
+      );
   }
 }
 
@@ -51,8 +44,6 @@ void registerTask() {
     AppKey.remoteDataSource: remoteDataSource,
     AppKey.connectionChecker: connectionChecker,
   };
-
-  print('----------inputData '+inputData.toString());
 
   Workmanager().registerPeriodicTask(
     "1", // Unique identifier for the task

@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:todo_app/core/constant/app_size.dart';
 import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
+import 'package:todo_app/data/datasources/dummy_category_list.dart';
 
 class CategorySectionWidget extends StatefulWidget {
   final String? selectedValue;
@@ -25,16 +26,13 @@ class _CategorySectionWidget extends State<CategorySectionWidget> {
   @override
   void initState() {
     super.initState();
-    categories = {
-      widget.buildContext.text.general: Colors.green,
-      widget.buildContext.text.learning: Colors.blue,
-      widget.buildContext.text.working: Colors.amber,
-    };
+    categories = DummyData.getCategories(widget.buildContext);
     if(widget.selectedValue!=null){
       _selectedValue = widget.selectedValue;
     }else {
       _selectedValue = categories.keys.first;
-      widget.onValueChanged(_selectedValue); // Call the callback with default value
+      widget.onValueChanged(_selectedValue);
+
     }
   }
 

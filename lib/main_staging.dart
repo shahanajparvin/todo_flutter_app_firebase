@@ -4,6 +4,5 @@ import 'package:todo_app/main_common.dart';
 void main() {
   mainCommon(const FlavorConfig(
       flavorType: FlavorType.staging,
-      baseUrl: "https://api.pointsafety.getonnet.dev",
-      packageName: "com.pointsafetynor.readytolearn.staging"));
+      packageName: "com.flutter.todoApp.staging"));
 }

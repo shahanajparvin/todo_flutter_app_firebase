@@ -24,6 +24,16 @@ class AppSettings {
     await _prefHelper.setString(AppKey.keyCurrentLanguage, language.languageCode);
   }
 
+  Future<void> setName(String name) async {
+    await _prefHelper.setString(AppKey.keySaveName, name);
+  }
+
+  String getName() {
+    String name = _prefHelper.getString(AppKey.keySaveName);
+    return name;
+  }
+
+
   Future<void> logoutUser() async {
     Language language = getSelectedLanguage();
     _prefHelper.clear();

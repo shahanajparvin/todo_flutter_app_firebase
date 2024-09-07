@@ -15,6 +15,8 @@ class AppKey {
 
   static const keyCurrentLanguage = "current_language";
 
+  static const keySaveName= "save_name";
+
 
   static const working = "Working";
   static const learning = "Learning";

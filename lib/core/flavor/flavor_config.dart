@@ -3,10 +3,9 @@
 
 class FlavorConfig {
   final FlavorType flavorType;
-  final String baseUrl;
   final String packageName;
 
-  const FlavorConfig({required this.flavorType, required this.baseUrl, required this.packageName});
+  const FlavorConfig({required this.flavorType,required this.packageName});
 }
 
 enum FlavorType {

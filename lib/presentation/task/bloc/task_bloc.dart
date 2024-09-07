@@ -85,11 +85,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         final currentState = state;
         if (currentState is TaskLoaded) {
           List<Task> updatedTaskList = List.from(currentState.tasks);
-          updatedTaskList.add(newTask); // Add the new task to the list
+          updatedTaskList.insert(0,newTask); // Add the new task to the list
           emit(TaskLoaded(updatedTaskList));
         } else {
           List<Task> updatedTaskList = [];
-          updatedTaskList.add(newTask); // Add the new task to the list
+          updatedTaskList.insert(0,newTask); // Add the new task to the list
           emit(TaskLoaded(updatedTaskList));
         }
         dismissWithMessage(message: getContext().text.success_add,isError: false);
@@ -191,7 +191,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     dismissLoadingIndicator();
     showAlert(
         message: message,
-        isError: true
+        isError: isError
     );
   }
 

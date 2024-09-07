@@ -20,9 +20,10 @@ class TextInputField extends StatelessWidget {
   final GestureTapCallback? onTap;
   final String? errorText;
   final TextInputAction? textInputAction;
+  final int? maxLength;
 
 
-  const TextInputField({super.key, this.textFieldKey, required this.inputController, required this.hintText, required this.label,this.maxLine = 1, this.icon,  this.readOnly = false, this.onTap, this.errorText, this.textInputAction});
+  const TextInputField({super.key, this.textFieldKey, required this.inputController, required this.hintText, required this.label,this.maxLine = 1, this.icon,  this.readOnly = false, this.onTap, this.errorText, this.textInputAction, this.maxLength});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class TextInputField extends StatelessWidget {
         Gap(AppHeight.s10),
         SizedBox(
           child: TextFormField(
+            maxLength: maxLength,
             textInputAction: textInputAction ?? TextInputAction.next,
             key: textFieldKey,
             onEditingComplete: (){
@@ -51,6 +53,7 @@ class TextInputField extends StatelessWidget {
             readOnly: readOnly,
             onTap: onTap,
             decoration: InputDecoration(
+              counterStyle: TextStyle(color: AppColor.hintColor,fontSize: AppTextSize.s12,fontWeight: FontWeight.w500),
               prefixIcon: icon!=null?Icon(icon,color: AppColor.hintColor,size: AppWidth.s20,):null,
               contentPadding: EdgeInsets.symmetric(vertical: 12.0,horizontal: 16), // Adjust padding as needed
               hintText: hintText,

@@ -39,12 +39,30 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       height: height,
       child: ElevatedButton(
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: labelColor ?? Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: AppTextSize.s15),
+        child: Row(
+          mainAxisSize: MainAxisSize.min, // Keeps the button compact
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              label,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: labelColor ?? Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: AppTextSize.s15,
+              ),
+            ),
+            if(isIcon)
+            Row(
+              children: [
+                SizedBox(width: 8), // Optional space between the text and icon
+                Icon(
+                  Icons.arrow_forward, // Change this to any icon you prefer
+                  color: labelColor ?? Colors.white, // Matches the icon color to the text color
+                  size: AppWidth.s20, // Adjust the size of the icon
+                ),
+              ],
+            ),
+          ],
         ),
         onPressed: () {
           if (onPressed != null) {

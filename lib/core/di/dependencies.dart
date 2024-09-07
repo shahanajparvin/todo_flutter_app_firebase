@@ -4,7 +4,7 @@ import 'package:todo_app/core/base/app_routes.dart';
 import 'package:todo_app/core/base/app_settings.dart';
 import 'package:todo_app/core/di/injector.dart';
 import 'package:todo_app/core/flavor/flavor_config.dart';
-import 'package:todo_app/core/synch_service.dart';
+import 'package:todo_app/core/services/task_sync_service.dart';
 import 'package:todo_app/core/utils/sharedpreferences_helper.dart';
 
 

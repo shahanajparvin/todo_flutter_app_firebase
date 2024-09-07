@@ -14,18 +14,13 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-class DefaultFirebaseOptions {
+/*class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
         return ios;
-      case TargetPlatform.macOS:
-        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,15 +38,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAYMwzvCrkvtVPYofaPunsUZ4GMfhE29vA',
-    appId: '1:298096462225:web:37220ea4868e4146b2f230',
-    messagingSenderId: '298096462225',
-    projectId: 'ready-to-learn-edb1e',
-    authDomain: 'ready-to-learn-edb1e.firebaseapp.com',
-    storageBucket: 'ready-to-learn-edb1e.appspot.com',
-    measurementId: 'G-WHX7LL9HCG',
-  );
+
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCYcscfqh_LoVjK8M8JqBIyLJtF10pq-rU',
@@ -62,20 +49,82 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC4HDLst74Wf_HnjqQPV_L3kmKOAWBRUjM',
-    appId: '1:298096462225:ios:c0235aa4bd181b4eb2f230',
-    messagingSenderId: '298096462225',
+    apiKey: 'AIzaSyBenPQ3ggZNfdFKoEZwuiBnSBKx5sYuPiQ',
+    appId: '1:167763629226:ios:8a04e26673c102d7bbacd3',
+    messagingSenderId: '167763629226',
     projectId: 'ready-to-learn-edb1e',
-    storageBucket: 'ready-to-learn-edb1e.appspot.com',
-    iosBundleId: 'com.pointsafetynor.readytolearn',
+    storageBucket: 'todoapp-e06fa.appspot.com',
+    iosBundleId: 'com.flutter.todoApp',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC4HDLst74Wf_HnjqQPV_L3kmKOAWBRUjM',
-    appId: '1:298096462225:ios:b7ee9cf9fec76cc8b2f230',
+
+}*/
+
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return _getAndroidOptions();
+      case TargetPlatform.iOS:
+        return _getIOSOptions();
+      default:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
+    }
+  }
+
+  static FirebaseOptions _getAndroidOptions() {
+    if (const String.fromEnvironment('FLAVOR') == 'staging') {
+      print('----staging');
+      return androidStaging;
+    } else {
+      print('----live');
+      return androidLive;
+    }
+  }
+
+  static FirebaseOptions _getIOSOptions() {
+    if (const String.fromEnvironment('FLAVOR') == 'staging') {
+      return iosStaging;
+    } else {
+      return iosLive;
+    }
+  }
+
+  static const FirebaseOptions androidLive = FirebaseOptions(
+    apiKey: 'AIzaSyCYcscfqh_LoVjK8M8JqBIyLJtF10pq-rU',
+    appId: '1:167763629226:android:f75c76415d37f22cbbacd3',
     messagingSenderId: '298096462225',
+    projectId: 'todoapp-e06fa',
+    storageBucket: 'todoapp-e06fa.appspot.com',
+  );
+
+  static const FirebaseOptions androidStaging = FirebaseOptions(
+    apiKey: 'AIzaSyCYcscfqh_LoVjK8M8JqBIyLJtF10pq-rU',
+    appId: '1:167763629226:android:fb335dd6c6d484e3bbacd3',
+    messagingSenderId: '298096462225',
+    projectId: 'todoapp-e06fa',
+    storageBucket: 'todoapp-e06fa.appspot.com',
+  );
+
+  static const FirebaseOptions iosLive = FirebaseOptions(
+    apiKey: 'AIzaSyBenPQ3ggZNfdFKoEZwuiBnSBKx5sYuPiQ',
+    appId: '1:167763629226:ios:8a04e26673c102d7bbacd3',
+    messagingSenderId: '167763629226',
     projectId: 'ready-to-learn-edb1e',
-    storageBucket: 'ready-to-learn-edb1e.appspot.com',
-    iosBundleId: 'com.pointsafetynor.readytolearn.RunnerTests',
+    storageBucket: 'todoapp-e06fa.appspot.com',
+    iosBundleId: 'com.flutter.todoApp',
+  );
+
+  static const FirebaseOptions iosStaging = FirebaseOptions(
+    apiKey: 'AIzaSyBenPQ3ggZNfdFKoEZwuiBnSBKx5sYuPiQ',
+    appId: '1:167763629226:ios:8a04e26673c102d7bbacd3',
+    messagingSenderId: '167763629226',
+    projectId: 'STAGING_PROJECT_ID',
+    storageBucket: 'STAGING_STORAGE_BUCKET',
+    iosBundleId: 'com.yourcompany.stagingApp',
   );
 }
+

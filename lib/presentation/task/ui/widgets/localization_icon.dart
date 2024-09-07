@@ -8,8 +8,9 @@ import 'package:todo_app/presentation/changelanguage/ui/change_language_view.dar
 class TranslateIcon extends StatelessWidget {
 
   final ModalController modalController;
+  final Color? color;
 
-  const TranslateIcon({super.key, required this.modalController});
+  const TranslateIcon({super.key, required this.modalController, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class TranslateIcon extends StatelessWidget {
       child: Row(children: [
         IconButton(onPressed: () async {
           modalController.showModal(context, ChangeLanguageView(modalController: modalController,));
-        }, icon: Icon(Icons.translate))
+        }, icon: Icon(Icons.translate,color: color!=null?color:null,))
       ]),
     );
   }

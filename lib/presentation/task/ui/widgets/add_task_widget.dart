@@ -13,7 +13,7 @@ import 'package:todo_app/domain/entities/task.dart';
 import 'package:todo_app/presentation/common/widgets/app_close_icon.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 import 'package:todo_app/presentation/task/bloc/task_event.dart';
-import 'package:todo_app/presentation/task/ui/task_list_new.dart';
+import 'package:todo_app/presentation/task/ui/task_list_page.dart';
 import 'package:todo_app/presentation/task/ui/widgets/add_task_button_section.dart';
 import 'package:todo_app/presentation/task/ui/widgets/app_button.dart';
 import 'package:todo_app/presentation/task/ui/widgets/category_section_widget.dart';
@@ -106,6 +106,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   AppCloseIcon(modalController: widget.modalController),
                   Gap(AppHeight.s20),
                   TextInputField(
+                    maxLength: 50,
                     textFieldKey: _titleKey,
                     label: context.text.title_task,
                     inputController: _titleController,
@@ -114,6 +115,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   ),
                   Gap(AppHeight.s20),
                   TextInputField(
+                    maxLength: 150,
                     textFieldKey: _descriptionKey,
                     label: context.text.description,
                     inputController: _descriptionController,
@@ -127,6 +129,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     onValueChanged: (value){
                       _selectedValue = value!;
                     },
+
                   ),
                   Gap(AppHeight.s20),
                   Row(children: [

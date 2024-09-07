@@ -78,7 +78,7 @@ class ErrorInfo extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16 * 2.5),
-            button ??
+        /*    button ??
                 ElevatedButton(
                   onPressed: press,
                   style: ElevatedButton.styleFrom(
@@ -88,7 +88,7 @@ class ErrorInfo extends StatelessWidget {
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)))),
                   child: Text(btnText ?? "Retry".toUpperCase()),
-                ),
+                ),*/
             const SizedBox(height: 16),
           ],
         ),

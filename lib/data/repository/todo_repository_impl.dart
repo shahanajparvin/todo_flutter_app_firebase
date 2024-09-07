@@ -23,9 +23,12 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<List<Task>>> getTasks() async {
+
     if (await connectionChecker.isConnected()) {
       final response = await remoteDataSource.getTasks();
-      print('-----------response ' + response.toString());
+      if (response is SuccessResponse<Task>) {
+        await _saveTaskList(response); // Store locally
+      }
       return response;
     } else {
       final data = await localDataSource.getTasks();
@@ -40,29 +43,42 @@ class TodoRepositoryImpl extends TodoRepository {
   @override
   Future<Response<Task>> addTask(Task task) async {
     if (await connectionChecker.isConnected()) {
+      // Add task to remote data source
       final response = await remoteDataSource.addTask(task);
       print('-----------response ' + response.toString());
+
+      // If the task was successfully added to the remote source, also add it to the local data source for later offline access
+      if (response is SuccessResponse<Task>) {
+        await localDataSource.addTask(response.data!); // Store locally
+      }
       return response;
     } else {
+      // Add task only to the local data source if no internet connection
       final data = await localDataSource.addTask(task);
-      print('-----------dataaa ss' + data.toString());
+
       if (data == null) {
         return const ErrorResponse(
             errorMessage: "Please check your internet connection");
       }
+
       return SuccessResponse(data: data);
     }
   }
 
+
   @override
   Future<Response<Task>> updateTask(Map<String, dynamic> map) async {
-    if (!(map['id'].contains('local'))&&await connectionChecker.isConnected()) {
-      print('-----asdasdas');
+    if (await connectionChecker.isConnected()) {
+
       final response = await remoteDataSource.updateTask(
           map['id'], map['task']);
-      print('-----------response ' + response.toString());
+
+      // If the task was successfully updated to the remote source, also add it to the local data source for later offline access
+      if (response is SuccessResponse<Task>) {
+        await localDataSource.updateTask(map['task']); // Store locally
+      }
       return response;
-    } else if(( map['id'].contains('local'))){
+    } else {
       final data = await localDataSource.updateTask(map['task']);
       if (data == null) {
         return const ErrorResponse(
@@ -70,46 +86,44 @@ class TodoRepositoryImpl extends TodoRepository {
       }
       return SuccessResponse(data: data);
     }
-    return const ErrorResponse(
-        errorMessage: "Task can not update");
- /*   final data = await localDataSource.updateTask(map['task']);
-    if (data == null) {
-      return const ErrorResponse(
-          errorMessage: "Please check your internet connection");
-    }
-    return SuccessResponse(data: data);*/
   }
 
   @override
   Future<Response<String>> deleteTask(String id) async {
     print('-----------delete id  ' + id.toString());
-    if (!(id.contains('local'))&&await connectionChecker.isConnected()) {
-      final response = await remoteDataSource.deleteTask(id);
-      print('-----------response ' + response.toString());
-      return response;
-    } else if((id.contains('local'))){
-      final data = await localDataSource.deleteTask(id);
-      print('----------data '+data.toString());
-      if (data == null) {
-        return const ErrorResponse(
-            errorMessage: "Task can not delete");
+
+    // Check if it's a remote task and if the connection is available
+    if (!(id.contains('local')) && await connectionChecker.isConnected()) {
+      // Delete from the remote data source
+      final remoteResponse = await remoteDataSource.deleteTask(id);
+      print('-----------remoteResponse ' + remoteResponse.toString());
+
+      // If successful on the remote source, try deleting it from the local source as well
+      if (remoteResponse is SuccessResponse<String>) {
+        await localDataSource.deleteTask(id);
       }
-      return SuccessResponse(data: data);
-    }else{
-      return const ErrorResponse(
-          errorMessage: "Task can not delete");
+
+      return remoteResponse;
     }
+
+    // If it's a local task or there is no internet, handle local deletion
+    final localResponse = await localDataSource.deleteTask(id);
+    print('----------localResponse ' + localResponse.toString());
+
+    // Handle the case where the local deletion failed
+    if (localResponse == null) {
+      return const ErrorResponse(errorMessage: "Task cannot be deleted");
+    }
+
+    return SuccessResponse(data: localResponse);
   }
+
+
 
 
   Future<void> _saveTaskList(Response<List<Task>>? dataResponse) async {
     if (dataResponse != null) {
       await localDataSource.clearLatestData();
-      /* int lastTimeUpdate = DateTime.now().millisecondsSinceEpoch;
-      await localDataSource.updateLastDataUpdateTime(lastTimeUpdate);*/
-
-      print('-------------data saved ' +
-          (dataResponse is SuccessResponse).toString());
       if (dataResponse is SuccessResponse<List<Task>>) {
         List<Task> taskList = dataResponse
             .data; // `.data` should be accessible here
@@ -118,7 +132,6 @@ class TodoRepositoryImpl extends TodoRepository {
               .description}');
         });
         await localDataSource.saveTasks(taskList);
-        print("-------------data saved  successfully");
       }
     }
   }
@@ -135,25 +148,33 @@ class TodoRepositoryImpl extends TodoRepository {
 
   @override
   Future<Response<String>> updateIsCompleted(Map<String, dynamic> map) async {
-
     String id = map['id'];
     bool isCompleted = map['isCompleted'];
 
-    if (!(id.contains('local'))&&await connectionChecker.isConnected()) {
-    final response = await remoteDataSource.updateIsCompleted(id,isCompleted);
-    print('-----------response ' + response.toString());
-    return response;
-    } else if((id.contains('local'))){
-    final data = await localDataSource.updateIsCompleted(id,isCompleted);
-    print('----------data '+data.toString());
-    if (data == null) {
-    return const ErrorResponse(
-    errorMessage: "Task can not update ");
+    // Check if it's a remote task and if the connection is available
+    if (!(id.contains('local')) && await connectionChecker.isConnected()) {
+      // Update the remote data source
+      final remoteResponse = await remoteDataSource.updateIsCompleted(id, isCompleted);
+      print('-----------remoteResponse ' + remoteResponse.toString());
+
+      // If successful on the remote source, update the local source as well
+      if (remoteResponse is SuccessResponse<String>) {
+        await localDataSource.updateIsCompleted(id, isCompleted);
+      }
+
+      return remoteResponse;
     }
-    return SuccessResponse(data: data);
-    }else{
-    return const ErrorResponse(
-    errorMessage: "Task can not update ");
+
+    // If it's a local task or there is no internet, handle local update
+    final localResponse = await localDataSource.updateIsCompleted(id, isCompleted);
+    print('----------localResponse ' + localResponse.toString());
+
+    // Handle the case where the local update failed
+    if (localResponse == null) {
+      return const ErrorResponse(errorMessage: "Task cannot be updated");
     }
+
+    return SuccessResponse(data: localResponse);
   }
+
 }

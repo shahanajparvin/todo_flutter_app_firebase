@@ -121,7 +121,10 @@ class ChangeLanguageViewState extends State<ChangeLanguageView> {
                 height: 40,
               ),
               const Gap(16),
-              Text(Language.getLocalizedLanguageName(context, language.languageCode)),
+              Text(Language.getLocalizedLanguageName(context, language.languageCode),style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: AppTextSize.s14
+              )),
               const Spacer(),
               if (selectedLanguage == language)
                 Padding(

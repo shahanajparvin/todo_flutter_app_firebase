@@ -43,6 +43,13 @@
 
 
   "fail_status": "Failed to updated status.",
-  "success_status" : "A task status has been added."
+  "success_status" : "A task status has been updated.",
+
+  "name": "Name",
+  "enter_name" : "Enter your name",
+  "next": "Next",
+  "save":"Save",
+  "welcome_todo_app": "Welcome Todo App"
+
 
 }

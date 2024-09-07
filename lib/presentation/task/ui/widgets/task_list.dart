@@ -26,6 +26,7 @@ class TaskList extends StatelessWidget {
       itemBuilder: (context, index) {
         final task = tasks[index];
         return TaskListItem(
+          index: index,
           taskBloc: taskBloc,
           task:task,
           modalController:modalController,

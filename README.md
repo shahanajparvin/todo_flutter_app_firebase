@@ -15,6 +15,8 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+To Generate Translation:
+
 flutter gen-l10n
 flutter build apk --debug --target lib/main_staging.dart
 dart run build_runner build

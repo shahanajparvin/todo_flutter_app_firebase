@@ -20,7 +20,7 @@ GoRouter provideGoRoute() {
         return null;
       },*/
       navigatorKey: AppContext.navigatorKey,
-      initialLocation: "/home",
+      initialLocation: "/",
       debugLogDiagnostics: kDebugMode,
       routes: [
         GoRoute(

@@ -6,51 +6,82 @@ import 'package:todo_app/core/constant/pref_keys.dart';
 import 'package:todo_app/core/date_time_utility.dart';
 import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
+import 'package:todo_app/data/datasources/dummy_category_list.dart';
 import 'package:todo_app/domain/entities/task.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 import 'package:todo_app/presentation/task/bloc/task_event.dart';
 import 'package:todo_app/presentation/task/ui/widgets/add_task_widget.dart';
 import 'package:todo_app/presentation/task/ui/widgets/slider_edit_delete_action_widget.dart';
 
-class TaskListItem extends StatelessWidget {
+class TaskListItem extends StatefulWidget {
   final ModalController modalController;
   final TaskBloc taskBloc;
   final Task task;
+  final int index;
 
 
-  const TaskListItem({super.key, required this.modalController, required this.taskBloc, required this.task});
+   TaskListItem({super.key, required this.modalController, required this.taskBloc, required this.task, required this.index});
+
+  @override
+  State<TaskListItem> createState() => _TaskListItemState();
+}
+
+class _TaskListItemState extends State<TaskListItem> {
+  double screenHeight = 0;
+
+  double screenWidth = 0;
+
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
     TextDirection direction = Directionality.of(context);
+    String localizedCategory =  localizeCategory(context,widget.task.category);
+    Color getColor = DummyData.getColor(context,localizeCategory(context,localizedCategory));
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return SlidableListItem(
         onDelete:(){
-         taskBloc.add(DeleteTask(task.id!));
+         widget.taskBloc.add(DeleteTask(widget.task.id!));
         },
         onUpdate: () {
-          modalController.showModal(
+          widget.modalController.showModal(
             context,
-            AddTaskWidget(modalController: modalController, taskBloc: taskBloc,task: task,),
+            AddTaskWidget(modalController: widget.modalController, taskBloc: widget.taskBloc,task: widget.task,buildContext: context,),
           );
         },
-        child:Container(
+        child:AnimatedContainer(
           decoration: BoxDecoration(
             color: Colors.white,
             border: direction==TextDirection.ltr?Border(
               left: BorderSide(
-                color: Colors.blue, // Border color
-                width: AppWidth.s8, // Border width
+                color: getColor, // Border color
+                width: AppWidth.s6, // Border width
               ),
             ):Border(
               right: BorderSide(
-                color: Colors.blue, // Border color
-                width: AppWidth.s8, // Border width
+                color: getColor, // Border color
+                width: AppWidth.s6, // Border width
               ),
             ),
             borderRadius: BorderRadius.circular(
                 10.0), // Radius applied to all corners
           ),
+          curve: Curves.easeInOut,
+          duration: Duration(milliseconds: (300 + (widget.index * 200)).toInt()),
+          transform: Matrix4.translationValues(startAnimation ? 0 : screenWidth, 0, 0),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -65,9 +96,9 @@ class TaskListItem extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              task.title,
+                              widget.task.title,
                               style: TextStyle(
-                                fontSize: 18.0,
+                                fontSize: AppTextSize.s16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -75,36 +106,40 @@ class TaskListItem extends StatelessWidget {
                           Gap(AppWidth.s10),
                           AppCircularCheckbox(
                             onChanged: (value) {
-                              taskBloc.add(UpdateIsCompleted(task.id!, value!));
+                              widget.taskBloc.add(UpdateIsCompleted(widget.task.id!, value!));
                             },
-                            isChecked: task.isCompleted,
+                            isChecked: widget.task.isCompleted,
                           ),
                         ],
                       ),
                       SizedBox(height: 4.0),
                       Text(
-                        task.description,
-                        style: TextStyle(fontSize: 16.0),
+                        widget.task.description,
+                        style: TextStyle(
+                          fontSize: AppTextSize.s14,
+                          color: Colors.grey.shade700,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                      Gap(AppHeight.s10),
                      Divider(color: Colors.grey.shade200,height:0.5),
                       Gap(AppHeight.s10),
                      Row(
                         children: [
-                          Icon(Icons.calendar_today,
-                              size: 16.0),
+                          Icon(Icons.calendar_month,
+                              size: AppWidth.s16),
                           SizedBox(width: 4.0),
-                          Text(DateTimeUtility.stringConvertToDateLocalization(dateString: task.date,parseCode: 'en')),
+                          Text(DateTimeUtility.stringConvertToDateLocalization(dateString: widget.task.date,parseCode: 'en'),style: TextStyle(fontSize: AppTextSize.s14, color: Colors.grey.shade600,fontWeight: FontWeight.w400)),
 
-                          SizedBox(width: 16.0),
-                          Icon(Icons.access_time, size: 16.0),
-                          SizedBox(width: 4.0),
-                          Text(DateTimeUtility.stringConvertToATimeLocalization(timeString: task.time,parseCode: 'en')),
+                          SizedBox(width: AppWidth.s16),
+                          Icon(Icons.access_time, size: AppWidth.s16),
+                          SizedBox(width: AppWidth.s4),
+                          Text(DateTimeUtility.stringConvertToATimeLocalization(timeString: widget.task.time,parseCode: 'en'), style: TextStyle(fontSize: AppTextSize.s14, color: Colors.grey.shade600,fontWeight: FontWeight.w400)),
 
                           Spacer(),
                           Text(
-                            localizeCategory(context,task.category),
-                            style: TextStyle(fontSize: 16.0),
+                            localizedCategory,
+                            style: TextStyle(fontSize: AppTextSize.s14,color: getColor,fontWeight: FontWeight.w500),
                           ),
 
 
@@ -132,13 +167,12 @@ class TaskListItem extends StatelessWidget {
     return category;
   }
 
-  Color getColor(Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
-      return Colors.red; // Color when checked
+  Color getColor(Set<WidgetStateProperty> states) {
+    if (states.contains(WidgetState.selected)) {
+      return Colors.transparent; // Color when checked
     }
-    return Colors.grey; // Color when unchecked
+    return AppColor.themeColor; // Color when unchecked
   }
-
 }
 
 
