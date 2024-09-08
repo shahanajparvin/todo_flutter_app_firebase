@@ -149,6 +149,6 @@ flutter build apk --release --target lib/main_live.dart
 ```
 
 <p align="center">
- <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_1.png" alt="Screenshot 1" width="300" style="margin: 20px;"/>
- <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_2.png" alt="Screenshot 3" width="300" style="margin: 20px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_1.png" alt="Screenshot 1" width="400" style="margin: 20px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_2.png" alt="Screenshot 3" width="400" style="margin: 20px;"/>
 </p>
