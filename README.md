@@ -8,14 +8,39 @@ This Flutter-based ToDo app allows users to manage tasks both online and offline
 <p align="center">
   <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png" alt="Screenshot 1" width="250" style="margin: 20px;"/>
  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732313.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png" alt="Screenshot 1" width="300" style="margin: 40px;"/>
- <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="300" style="margin: 40px;"/>
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="300" style="margin: 20px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732323.png" alt="Screenshot 1" width="300" style="margin: 40px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732330.png" alt="Screenshot 3" width="300" style="margin: 40px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732345.png" alt="Screenshot 3" width="300" style="margin: 20px;"/>
 </p>
+
+<p align="center">
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732347.png" alt="Screenshot 1" width="250" style="margin: 20px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732351.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732372.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734589.png" alt="Screenshot 1" width="300" style="margin: 40px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734593.png" alt="Screenshot 3" width="300" style="margin: 40px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734624.png" alt="Screenshot 3" width="300" style="margin: 20px;"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734727.png" alt="Screenshot 1" width="250" style="margin: 20px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734734.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734740.png" alt="Screenshot 3" width="250" style="margin: 20px;"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734773.png" alt="Screenshot 1" width="300" style="margin: 40px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734788.png" alt="Screenshot 3" width="300" style="margin: 40px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725734897.png" alt="Screenshot 3" width="300" style="margin: 20px;"/>
+</p>
+
 
 ## Project Architecture
 The project follows the Clean Architecture pattern, ensuring separation of concerns and scalability. Flavors are integrated to handle environment-specific configurations.
