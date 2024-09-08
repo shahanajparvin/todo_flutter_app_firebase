@@ -3,6 +3,9 @@
 ## Overview
 This Flutter-based ToDo app allows users to manage tasks both online and offline, with seamless synchronization to Firebase. It is designed using clean architecture and incorporates app flavors for different environments (e.g., development, staging, production). The project uses `flutter_bloc` for state management, supports localization in English and Arabic, and implements complex animations while optimizing performance.
 
+![App Screenshot 1](https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png)
+![App Screenshot 2](https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png)
+
 ## Project Architecture
 The project follows the Clean Architecture pattern, ensuring separation of concerns and scalability. Flavors are integrated to handle environment-specific configurations.
 
