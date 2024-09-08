@@ -6,9 +6,9 @@ This Flutter-based ToDo app allows users to manage tasks both online and offline
 ## App Screenshots
 
 <p align="center">
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png" alt="Screenshot 1" width="300" style="margin: 40px;"/>
- <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="300" style="margin: 40px;"/>
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="300" style="margin: 20px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png" alt="Screenshot 1" width="250" style="margin: 10px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="250" style="margin: 10px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="250" style="margin: 10px;"/>
 </p>
 
 <p align="center">
