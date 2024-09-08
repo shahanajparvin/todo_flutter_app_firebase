@@ -3,11 +3,13 @@
 ## Overview
 This Flutter-based ToDo app allows users to manage tasks both online and offline, with seamless synchronization to Firebase. It is designed using clean architecture and incorporates app flavors for different environments (e.g., development, staging, production). The project uses `flutter_bloc` for state management, supports localization in English and Arabic, and implements complex animations while optimizing performance.
 
+## App Screenshots
+
 <p align="center">
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png" alt="Screenshot 1" width="200"/>
- <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="200"/>
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="200"/>
-  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 4" width="200"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732300.png" alt="Screenshot 1" width="200" style="margin: 10px;"/>
+ <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="200" style="margin: 10px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 3" width="200" style="margin: 10px;"/>
+  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/screenshots/Screenshot_1725732307.png" alt="Screenshot 4" width="200"  style="margin: 10px;"/>
 </p>
 
 ## Project Architecture
