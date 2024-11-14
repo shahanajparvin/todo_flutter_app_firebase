@@ -48,3 +48,7 @@ class UpdateIsCompleted extends TaskEvent {
   @override
   List<Object?> get props => [taskId];
 }
+
+class ShowLoadingEvent extends TaskEvent {}
+
+class DismissLoadingEvent extends TaskEvent {}

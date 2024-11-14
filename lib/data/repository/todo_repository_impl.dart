@@ -22,11 +22,29 @@ class TodoRepositoryImpl extends TodoRepository {
     required this.connectionChecker});
 
   @override
-  Future<Response<List<Task>>> getTasks() async {
+  Future<Response<Task>> addTask(Task task) async {
+    if (await connectionChecker.isConnected()) {
+      print('remoteDataSource '+ task.toString());
+      final response = await remoteDataSource.addTask(task);
+      if (response is SuccessResponse<Task>) {
+        await localDataSource.addTask(response.data); // Store locally
+      }
+      return response;
+    } else {
+      final data = await localDataSource.addTask(task);
+      if (data == null) {
+        return const ErrorResponse(
+            errorMessage: "Please check your internet connection");
+      }
+      return SuccessResponse(data: data);
+    }
+  }
 
+  @override
+  Future<Response<List<Task>>> getTasks() async {
     if (await connectionChecker.isConnected()) {
       final response = await remoteDataSource.getTasks();
-      if (response is SuccessResponse<Task>) {
+      if (response is SuccessResponse<List<Task>>) {
         await _saveTaskList(response); // Store locally
       }
       return response;
@@ -40,29 +58,7 @@ class TodoRepositoryImpl extends TodoRepository {
     }
   }
 
-  @override
-  Future<Response<Task>> addTask(Task task) async {
-    if (await connectionChecker.isConnected()) {
-      // Add task to remote data source
-      final response = await remoteDataSource.addTask(task);
 
-      // If the task was successfully added to the remote source, also add it to the local data source for later offline access
-      if (response is SuccessResponse<Task>) {
-        await localDataSource.addTask(response.data!); // Store locally
-      }
-      return response;
-    } else {
-      // Add task only to the local data source if no internet connection
-      final data = await localDataSource.addTask(task);
-
-      if (data == null) {
-        return const ErrorResponse(
-            errorMessage: "Please check your internet connection");
-      }
-
-      return SuccessResponse(data: data);
-    }
-  }
 
 
   @override

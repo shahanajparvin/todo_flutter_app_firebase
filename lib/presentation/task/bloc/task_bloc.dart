@@ -22,11 +22,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final AddTaskUseCase addTaskUseCase;
   final UpdateTaskUseCase updateTaskUseCase;
   final DeleteTaskUseCase deleteTaskUseCase;
-  final GetUnsyncedTsksUsecase unSyncedTaskUseCase;
   final UpdateIsCompletedUseCase updateIsCompletedUseCase;
 
   TaskBloc(this.getTasksUseCase, this.addTaskUseCase, this.updateTaskUseCase,
-      this.deleteTaskUseCase, this.unSyncedTaskUseCase,
+      this.deleteTaskUseCase,
       this.updateIsCompletedUseCase) : super(TaskInitial()) {
     on<FetchTasks>(_onFetchTasks);
     on<AddTask>(_onAddTask);
@@ -45,6 +44,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
             .data; // `.data` should be accessible here
         emit(TaskLoaded(taskList));
       } else {
+        print('-----taskloaded');
         emit(TaskLoaded([]));
       }
     } catch (e) {
@@ -55,7 +55,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
 
   Future<void> _onAddTask(AddTask event, Emitter<TaskState> emit) async {
-    showLoading();
+    add(ShowLoadingEvent()); // Trigger loading indicator
     try {
       addTaskUseCase.setParam(event.task);
       Response<Task> response = await addTaskUseCase.execute();
@@ -76,7 +76,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         dismissWithMessage(message: getContext().text.fail_add);
       }
     } catch (e) {
+      print('----error '+ e.toString());
       dismissWithMessage(message: getContext().text.fail_add);
+    }finally {
+      add(DismissLoadingEvent()); // Dismiss loading indicator
     }
   }
 

@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/constant/pref_keys.dart';
 import 'package:todo_app/core/di/injector.dart';
@@ -32,7 +33,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return TaskListPage(taskBloc: _taskBloc);
+    return BlocProvider(
+        create: (context) => _taskBloc,
+    child:TaskListPage(taskBloc: _taskBloc));
   }
 }
 

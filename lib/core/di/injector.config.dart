@@ -41,10 +41,10 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i839.AppCustomAlertManager>(
-        () => _i839.AppCustomAlertManager());
     gh.factory<_i338.InternetConnectionChecker>(
         () => _i338.InternetConnectionChecker());
+    gh.factory<_i839.AppCustomAlertManager>(
+        () => _i839.AppCustomAlertManager());
     gh.singleton<_i629.DatabaseProvider>(() => _i629.DatabaseProvider());
     gh.lazySingleton<_i284.RemoteDataSource>(
         () => _i503.RemoteDataSourceImpl(gh<_i974.FirebaseFirestore>()));
@@ -59,22 +59,21 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i363.AddTaskUseCase>(
         () => _i363.AddTaskUseCase(repository: gh<_i530.TodoRepository>()));
+    gh.factory<_i676.UpdateTaskUseCase>(
+        () => _i676.UpdateTaskUseCase(repository: gh<_i530.TodoRepository>()));
     gh.factory<_i611.DeleteTaskUseCase>(
         () => _i611.DeleteTaskUseCase(repository: gh<_i530.TodoRepository>()));
-    gh.factory<_i845.GetTasksUseCase>(
-        () => _i845.GetTasksUseCase(repository: gh<_i530.TodoRepository>()));
     gh.factory<_i4.GetUnsyncedTsksUsecase>(() =>
         _i4.GetUnsyncedTsksUsecase(repository: gh<_i530.TodoRepository>()));
     gh.factory<_i841.UpdateIsCompletedUseCase>(() =>
         _i841.UpdateIsCompletedUseCase(repository: gh<_i530.TodoRepository>()));
-    gh.factory<_i676.UpdateTaskUseCase>(
-        () => _i676.UpdateTaskUseCase(repository: gh<_i530.TodoRepository>()));
+    gh.factory<_i845.GetTasksUseCase>(
+        () => _i845.GetTasksUseCase(repository: gh<_i530.TodoRepository>()));
     gh.factory<_i294.TaskBloc>(() => _i294.TaskBloc(
           gh<_i845.GetTasksUseCase>(),
           gh<_i363.AddTaskUseCase>(),
           gh<_i676.UpdateTaskUseCase>(),
           gh<_i611.DeleteTaskUseCase>(),
-          gh<_i4.GetUnsyncedTsksUsecase>(),
           gh<_i841.UpdateIsCompletedUseCase>(),
         ));
     return this;
