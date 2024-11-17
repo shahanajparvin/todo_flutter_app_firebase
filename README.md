@@ -152,3 +152,6 @@ flutter build apk --release --target lib/main_live.dart
  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_1.png" alt="Screenshot 1" width="400" style="margin: 20px;"/>
  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_2.png" alt="Screenshot 3" width="400" style="margin: 20px;"/>
 </p>
+
+
+flutter pub run build_runner build

@@ -52,6 +52,19 @@ class AppConst{
 
   static const syncService = "localDataSyncWithRemote";
 
+
+  static const  addSuccess = 'add_success';
+  static const  addFail = 'add_fail';
+
+  static const  updateSuccess = 'update_success';
+  static const  updateFail = 'update_fail';
+
+  static const  deleteSuccess = 'delete_success';
+  static const  deleteFail = 'delete_fail';
+
+  static const  statusSuccess = 'status_success';
+  static const  statusFail = 'delete_fail';
+
 }
 
 extension Trans on String {

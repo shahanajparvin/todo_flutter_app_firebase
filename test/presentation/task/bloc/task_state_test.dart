@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_app/domain/entities/task.dart';
 import 'package:todo_app/presentation/task/bloc/task_state.dart';
 
 import '../../../fakedata.dart';
@@ -18,7 +17,7 @@ void main() {
     });
 
     test('TaskLoaded should be an instance of TaskState', () {
-      final taskState = TaskLoaded(tasks);
+      final taskState = TaskLoaded(tasks: tasks);
       expect(taskState, isA<TaskState>());
       expect(taskState.tasks, tasks);
     });
@@ -31,8 +30,8 @@ void main() {
     });
 
     test('TaskLoaded props should be correct', () {
-      final taskState = TaskLoaded(tasks);
-      expect(taskState.props, [tasks]);
+      final taskState = TaskLoaded(tasks: tasks);
+      expect(taskState.props, [tasks,null,false]);
     });
 
     test('TaskError props should be correct', () {

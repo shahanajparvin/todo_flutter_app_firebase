@@ -49,6 +49,3 @@ class UpdateIsCompleted extends TaskEvent {
   List<Object?> get props => [taskId];
 }
 
-class ShowLoadingEvent extends TaskEvent {}
-
-class DismissLoadingEvent extends TaskEvent {}

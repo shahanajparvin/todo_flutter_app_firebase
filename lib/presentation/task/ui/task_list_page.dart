@@ -3,9 +3,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/constant/app_size.dart';
+import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/core/di/injector.dart';
 import 'package:todo_app/core/services/task_sync_manager.dart';
+import 'package:todo_app/core/utils/app_alert_manager.dart';
 import 'package:todo_app/core/utils/app_easy_loading.dart';
+import 'package:todo_app/core/utils/core_utils.dart';
 import 'package:todo_app/core/utils/modal_controller.dart';
 import 'package:todo_app/presentation/task/bloc/task_bloc.dart';
 import 'package:todo_app/presentation/task/bloc/task_event.dart';
@@ -64,8 +67,16 @@ class _TaskListState extends State<TaskListPage> {
                     listener: (context, state) {
                       if (state is TaskLoading) {
                         showLoadingIndicator(); // Show loading indicator
-                      } else if (state is DismissLoadingEvent) {
+                      }
+                      else if (state is TaskLoaded) {
                         dismissLoadingIndicator();
+                        if (state.message != null) {
+                          dismissWithMessage(message: state.message!, isError: state.isError);
+                        }
+                      }else{
+                        dismissLoadingIndicator();
+                        if(state is TaskError)
+                        dismissWithMessage(message: state.message);
                       }
                     },
                     child: BlocBuilder<TaskBloc, TaskState>(
@@ -92,6 +103,41 @@ class _TaskListState extends State<TaskListPage> {
           ]
         ));
   }
+
+  dismissWithMessage({required String message, bool isError = true}) {
+    dismissLoadingIndicator();
+    showAlert(
+        message: _messageTranslated(message),
+        isError: isError
+    );
+  }
+
+  String _messageTranslated(String message) {
+    switch (message) {
+      case AppConst.addSuccess:
+        return context.text.success_add;
+      case AppConst.addFail:
+        return context.text.fail_add;
+
+      case AppConst.updateSuccess:
+        return context.text.success_update;
+      case AppConst.updateFail:
+        return context.text.fail_update;
+
+      case AppConst.deleteSuccess:
+        return context.text.success_delete;
+      case AppConst.deleteFail:
+        return context.text.fail_delete;
+
+      case AppConst.statusSuccess:
+        return context.text.success_status;
+      case AppConst.statusFail:
+        return context.text.fail_status;
+      default:
+        return message;
+    }
+    }
+
 
   getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(

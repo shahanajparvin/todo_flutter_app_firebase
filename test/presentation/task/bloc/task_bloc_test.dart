@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
+import 'package:todo_app/core/constant/app_text.dart';
 import 'package:todo_app/domain/entities/firebase_response.dart';
 import 'package:todo_app/domain/entities/task.dart';
 import 'package:todo_app/domain/usecases/add_task_usecase.dart';
@@ -47,6 +48,17 @@ void main() {
     );
   });
 
+  List<Task> updateTaskById(String id, Task updatedTask) {
+    final index = tasks.indexWhere((task) => task.id == id);
+    if (index != -1) {
+      tasks[index] = updatedTask;
+    }
+
+    return tasks;
+  }
+
+
+
   group('TaskBloc', () {
 
 
@@ -61,7 +73,7 @@ void main() {
       // Assert
       await expectLater(
         taskBloc.stream,
-        emitsInOrder([TaskLoading(), TaskLoaded(tasks)]),
+        emitsInOrder([TaskLoading(), TaskLoaded(tasks:tasks)]),
       );
     });
 
@@ -76,85 +88,108 @@ void main() {
       // Assert
       await expectLater(
         taskBloc.stream,
-        emitsInOrder([TaskLoading(), TaskLoaded([])]),
+        emitsInOrder([TaskLoading(), TaskLoaded(tasks:[])]),
       );
     });
 
-    test('emits TaskLoaded with updated task list on add task', () async {
-      // Arrange
+    test('emits TaskLoading and TaskLoaded on add task', () async {
+
       when(mockAddTaskUseCase.execute())
           .thenAnswer((_) => Future.value(SuccessResponse<Task>(data: newTask)));
 
-
-      // Act
       taskBloc.add(AddTask(newTask));
 
       List<Task> newList = [];
       newList.add(newTask);
 
-      // Asser;
       await expectLater(
         taskBloc.stream,
-        emitsInOrder([TaskLoaded(newList)]),
+        emitsInOrder([TaskLoading(), TaskLoaded(tasks: newList,message: AppConst.addSuccess)]),
       );
     });
 
-/*    test('emits TaskLoaded with updated task list on delete task', () async {
-      final remainingTasks = tasks.where((t) => t.id != '1').toList();
-
-      when(mockDeleteTaskUseCase.execute(any))
-          .thenAnswer((_) => Future.value(Response.success(null)));
-
-      // Mock the getTasks call that happens after deleting
+    test('emits TaskLoading and TaskError on add task', () async {
       when(mockGetTasksUseCase.execute())
-          .thenAnswer((_) => Future.value(Response.success(remainingTasks)));
+          .thenAnswer((_) => Future.value(ErrorResponse(errorMessage: 'Failed to add tasks')));
 
-      // Act
-      taskBloc.add(DeleteTask('1'));
+      taskBloc.add(AddTask(newTask));
 
       // Assert
       await expectLater(
         taskBloc.stream,
-        emitsInOrder([TaskLoading(), TaskLoaded(remainingTasks)]),
+        emitsInOrder([TaskLoading(), TaskError(AppConst.addFail)]),
       );
     });
 
-    test('emits TaskLoaded with updated task on task update', () async {
-      when(mockUpdateTaskUseCase.execute(any))
-          .thenAnswer((_) => Future.value(Response.success(updatedTask)));
+    test('emits TaskLoading and TaskLoaded on delete task', () async {
 
-      // Mock the getTasks call that happens after updating
-      when(mockGetTasksUseCase.execute())
-          .thenAnswer((_) => Future.value(Response.success([updatedTask])));
+      taskBloc.taskLoadedInList(tasks);
 
-      // Act
-      taskBloc.add(UpdateTask('1', task));
+      String taskId = '1';
 
-      // Assert
+      final remainingTasks = tasks.where((t) => t.id != taskId).toList();
+
+      when(mockDeleteTaskUseCase.execute())
+          .thenAnswer((_) => Future.value(SuccessResponse<String>(data: taskId)));
+
+      taskBloc.add(DeleteTask(taskId));
+
       await expectLater(
         taskBloc.stream,
-        emitsInOrder([TaskLoading(), TaskLoaded([updatedTask])]),
+        emitsInOrder([TaskLoading(), TaskLoaded(tasks: remainingTasks,message: AppConst.deleteSuccess)]),
       );
     });
 
-    test('emits TaskLoaded with updated task status on isCompleted update', () async {
-      final updatedTask = task.copyWith(isCompleted: true);
+    test('emits TaskLoading and TaskError on delete task', () async {
 
-      when(mockUpdateIsCompletedUseCase.execute(any))
-          .thenAnswer((_) => Future.value(Response.success(true)));
+      taskBloc.taskLoadedInList(tasks);
 
-      // Mock the getTasks call that happens after updating
-      when(mockGetTasksUseCase.execute())
-          .thenAnswer((_) => Future.value(Response.success([updatedTask])));
+      String taskId = '1';
 
-      // Act
-      taskBloc.add(UpdateIsCompleted('1', true));
+      when(mockDeleteTaskUseCase.execute())
+          .thenAnswer((_) => Future.value(ErrorResponse<String>(errorMessage: AppConst.deleteFail)));
 
-      // Assert
+      taskBloc.add(DeleteTask(taskId));
+
       await expectLater(
         taskBloc.stream,
-        emitsInOrder([TaskLoading(), TaskLoaded([updatedTask])]),
+        emitsInOrder([TaskLoading(), TaskError(AppConst.deleteFail)]),
       );
-    });*/
+    });
+
+    test('emits TaskLoading and TaskLoaded on update task', () async {
+
+      taskBloc.taskLoadedInList(tasks);
+
+      String taskId = '1';
+
+      when(mockUpdateTaskUseCase.execute())
+          .thenAnswer((_) => Future.value(SuccessResponse<Task>(data: updatedTask)));
+
+      taskBloc.add(UpdateTask(taskId, updatedTask));
+
+      await expectLater(
+        taskBloc.stream,
+        emitsInOrder([TaskLoading(), TaskLoaded(tasks: updateTaskById(taskId, updatedTask),message: AppConst.updateSuccess)]),
+      );
+    });
+
+    test('emits TaskLoading and TaskError on update task', () async {
+
+      taskBloc.taskLoadedInList(tasks);
+
+      String taskId = '1';
+
+      when(mockUpdateTaskUseCase.execute())
+          .thenAnswer((_) => Future.value(ErrorResponse<Task>(errorMessage: AppConst.updateFail)));
+
+      taskBloc.add(UpdateTask(taskId, updatedTask));
+
+      await expectLater(
+        taskBloc.stream,
+        emitsInOrder([TaskLoading(), TaskError(AppConst.updateFail)]),
+      );
+    });
+
   });
 }

@@ -15,11 +15,30 @@ class TaskLoading extends TaskState {}
 
 class TaskLoaded extends TaskState {
   final List<Task> tasks;
+  final String? message;  // Make nullable
+  final bool isError;
 
-  const TaskLoaded(this.tasks);
+  const TaskLoaded({
+    this.tasks = const [],  // Default value
+    this.message,          // Optional
+    this.isError = false   // Default value
+  });
+
+  // Implement copyWith
+  TaskLoaded copyWith({
+    List<Task>? tasks,
+    String? message,
+    bool? isError,
+  }) {
+    return TaskLoaded(
+      tasks: tasks ?? this.tasks,
+      message: message ?? this.message,
+      isError: isError ?? this.isError,
+    );
+  }
 
   @override
-  List<Object?> get props => [tasks];
+  List<Object?> get props => [tasks, message, isError];  // Include all properties
 }
 
 class TaskError extends TaskState {
