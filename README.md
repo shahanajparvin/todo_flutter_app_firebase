@@ -117,13 +117,31 @@ The app supports both English and Arabic using the `intl` package. Language swit
 - The app displays all labels, buttons, and text in the selected language, except for user input like task titles and descriptions.
 - Localization applies to the entire UI, including dates and times.
 
+## Getting Started
+
+This project uses [Flutter Version Management (FVM)](https://fvm.app/) to ensure all contributors use the same Flutter version. Follow these steps to set up the project:
+
+### Prerequisites
+1. Install [Flutter](https://flutter.dev/docs/get-started/install) on your machine.
+2. Install FVM globally by running:
+   ```bash
+   dart pub global activate fvm
+   fvm install
+   fvm use
+   ```
+
 ## To Generate Translations
 To generate translations for your app, run the following command:
 
-```
-flutter gen-l10n
+```bash
+fvm flutter gen-l10n
 ```
 
+## before run project:
+```bseh
+   fvm flutter pub get
+   fvm flutter pub run build_runner build
+```
 ## Running the App
 
 ### To Run Staging:
@@ -139,19 +157,16 @@ flutter gen-l10n
 
 ### To Build Staging Apk:
 ```bash
-flutter build apk --debug --target lib/main_staging.dart 
+fvm flutter build apk --debug --target lib/main_staging.dart 
 ```
 
 
 ### To Build Release Apk:
 ```bash
-flutter build apk --release --target lib/main_live.dart
+fvm flutter build apk --release --target lib/main_live.dart
 ```
 
 <p align="center">
  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_1.png" alt="Screenshot 1" width="400" style="margin: 20px;"/>
  <img src="https://github.com/shahanajparvin/todo_flutter_app_firebase/blob/master/run_configuration/Screenshot_2.png" alt="Screenshot 3" width="400" style="margin: 20px;"/>
 </p>
-
-
-flutter pub run build_runner build
